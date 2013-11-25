@@ -215,8 +215,10 @@ static sqlite3_stmt *statement = nil;
         if (sqlite3_prepare_v2(database,
                                select_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
+            int count = 0;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
+                count++;
                 NSLog(@"found image for this person");
                 NSString *URLString = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
                 NSLog(@"url of the image = %@", URLString);
@@ -238,6 +240,11 @@ static sqlite3_stmt *statement = nil;
                      NSLog(@"failure-----");
                  }];
                 
+            }
+            
+            if (count == 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"No photos found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
             }
             
 //            else
