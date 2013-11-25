@@ -7,6 +7,7 @@
 //
 
 #import "RKKFirstViewController.h"
+#import "RKKPhotoCollectionViewController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -29,7 +30,8 @@ static sqlite3_stmt *statement = nil;
 	// Do any additional setup after loading the view, typically from a nib.
     
     [self createDB];
-
+    self.imageURLs = [[NSMutableArray alloc]init];
+    imagesFound = FALSE;
     
 }
 
@@ -201,6 +203,9 @@ static sqlite3_stmt *statement = nil;
 
 -(IBAction)getPhoto:(id)sender
 {
+    //clear the existing images in array
+    [self.imageURLs removeAllObjects];
+    
     //get person id, city and date range from model
     const char *dbPath = [databasePath UTF8String];
     
@@ -219,40 +224,20 @@ static sqlite3_stmt *statement = nil;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 count++;
+                imagesFound = TRUE;
                 NSLog(@"found image for this person");
                 NSString *URLString = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
                 NSLog(@"url of the image = %@", URLString);
                 [self.imageURLs addObject:URLString];
                 
-                //code to get image from url
-                NSURL *imageURL = [NSURL URLWithString:URLString];
-                                
-                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
-                 {
-                     UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
-                     
-                     imageView.image = copyOfOriginalImage;
-                 }
-                        failureBlock:^(NSError *error)
-                 {
-                     // error handling
-                     NSLog(@"failure-----");
-                 }];
+                NSLog(@"no. of objects in array: %d", self.imageURLs.count);
                 
             }
             
-            if (count == 0) {
+            if (!imagesFound) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"No photos found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
-            
-//            else
-//            {
-//                //present an alert saying no photos found
-//                NSLog(@"no photos found");
-//                
-//            }
             
         }
         else
@@ -268,6 +253,21 @@ static sqlite3_stmt *statement = nil;
     
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    return imagesFound;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"number of url's being sent = %d", self.imageURLs.count);
+    
+    if ([segue.identifier isEqualToString:@"showPhotos"]) {
+        
+        RKKPhotoCollectionViewController *photoCollectionViewController = [segue destinationViewController];
+        photoCollectionViewController.photosArray = self.imageURLs;
+    }
+}
 
 
 - (void)didReceiveMemoryWarning

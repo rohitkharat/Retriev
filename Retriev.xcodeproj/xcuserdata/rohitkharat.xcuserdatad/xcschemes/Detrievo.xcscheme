@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "994A1DFA182DC5270065C8A9"
-               BuildableName = "Detrievo.app"
+               BuildableName = "Retriev.app"
                BlueprintName = "Retriev"
                ReferencedContainer = "container:Retriev.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "994A1E1E182DC5280065C8A9"
-               BuildableName = "DetrievoTests.xctest"
+               BuildableName = "RetrievTests.xctest"
                BlueprintName = "RetrievTests"
                ReferencedContainer = "container:Retriev.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "994A1DFA182DC5270065C8A9"
-            BuildableName = "Detrievo.app"
+            BuildableName = "Retriev.app"
             BlueprintName = "Retriev"
             ReferencedContainer = "container:Retriev.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "994A1DFA182DC5270065C8A9"
-            BuildableName = "Detrievo.app"
+            BuildableName = "Retriev.app"
             BlueprintName = "Retriev"
             ReferencedContainer = "container:Retriev.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "994A1DFA182DC5270065C8A9"
-            BuildableName = "Detrievo.app"
+            BuildableName = "Retriev.app"
             BlueprintName = "Retriev"
             ReferencedContainer = "container:Retriev.xcodeproj">
          </BuildableReference>

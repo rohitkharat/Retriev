@@ -18,6 +18,7 @@
     ABPeoplePickerNavigationController *picker ;
     IBOutlet UILabel *contactName;
     IBOutlet UIImageView *imageView;
+    BOOL imagesFound;
     
     NSString *databasePath;
 

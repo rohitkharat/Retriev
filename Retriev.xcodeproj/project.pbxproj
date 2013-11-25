@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712DF07E1843507F00F0A108 /* AssetsLibrary.framework */; };
+		714341751843BC9A00C179AD /* RKKPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */; };
 		9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2451837641900E0F77D /* RKKCameraViewController.m */; };
 		9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2481837657200E0F77D /* RKKTabViewController.m */; };
 		990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 990F48811838DE5C003CCB90 /* libsqlite3.dylib */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		712DF07E1843507F00F0A108 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKKPhotoCollectionViewController.h; path = ../RKKPhotoCollectionViewController.h; sourceTree = "<group>"; };
+		714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKPhotoCollectionViewController.m; path = ../RKKPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		9904F2441837641900E0F77D /* RKKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKCameraViewController.h; sourceTree = "<group>"; };
 		9904F2451837641900E0F77D /* RKKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKCameraViewController.m; sourceTree = "<group>"; };
 		9904F2471837657200E0F77D /* RKKTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKTabViewController.h; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				994A1E0D182DC5270065C8A9 /* RKKAppDelegate.h */,
 				994A1E0E182DC5270065C8A9 /* RKKAppDelegate.m */,
 				994A1E10182DC5270065C8A9 /* Main.storyboard */,
+				714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */,
+				714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */,
 				9904F2441837641900E0F77D /* RKKCameraViewController.h */,
 				9904F2451837641900E0F77D /* RKKCameraViewController.m */,
 				994A1E13182DC5270065C8A9 /* RKKFirstViewController.h */,
@@ -280,6 +285,7 @@
 				994A1E0F182DC5270065C8A9 /* RKKAppDelegate.m in Sources */,
 				9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */,
 				994A1E15182DC5270065C8A9 /* RKKFirstViewController.m in Sources */,
+				714341751843BC9A00C179AD /* RKKPhotoCollectionViewController.m in Sources */,
 				994A1E18182DC5270065C8A9 /* RKKSecondViewController.m in Sources */,
 				9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */,
 			);
