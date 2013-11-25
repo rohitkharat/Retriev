@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712DF07E1843507F00F0A108 /* AssetsLibrary.framework */; };
 		9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2451837641900E0F77D /* RKKCameraViewController.m */; };
 		9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2481837657200E0F77D /* RKKTabViewController.m */; };
 		990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 990F48811838DE5C003CCB90 /* libsqlite3.dylib */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		712DF07E1843507F00F0A108 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		9904F2441837641900E0F77D /* RKKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKCameraViewController.h; sourceTree = "<group>"; };
 		9904F2451837641900E0F77D /* RKKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKCameraViewController.m; sourceTree = "<group>"; };
 		9904F2471837657200E0F77D /* RKKTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKTabViewController.h; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */,
 				990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */,
 				994A1E01182DC5270065C8A9 /* CoreGraphics.framework in Frameworks */,
 				994A1E03182DC5270065C8A9 /* UIKit.framework in Frameworks */,
@@ -113,6 +116,7 @@
 		994A1DFD182DC5270065C8A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				712DF07E1843507F00F0A108 /* AssetsLibrary.framework */,
 				990F48811838DE5C003CCB90 /* libsqlite3.dylib */,
 				994A1DFE182DC5270065C8A9 /* Foundation.framework */,
 				994A1E00182DC5270065C8A9 /* CoreGraphics.framework */,

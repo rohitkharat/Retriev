@@ -413,6 +413,8 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 
     }
     
+    sqlite3_close(database);
+
 }
 
 - (void)didReceiveMemoryWarning

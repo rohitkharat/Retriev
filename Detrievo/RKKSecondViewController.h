@@ -30,9 +30,6 @@
 
 @property (nonatomic, strong) NSString *imgURLString;
 
-//@property (strong, nonatomic)
-//@property (nonatomic) sqlite3 *tagsDb;
-
 //@property (nonatomic) CGPoint leftEyePosition;
 //@property (nonatomic) CGPoint rightEyePosition;
 //@property (nonatomic) CGPoint mouthPosition;

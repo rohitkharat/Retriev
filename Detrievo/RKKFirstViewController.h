@@ -9,14 +9,28 @@
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <sqlite3.h>
+
 
 @interface RKKFirstViewController : UIViewController
 
 {
     ABPeoplePickerNavigationController *picker ;
     IBOutlet UILabel *contactName;
+    IBOutlet UIImageView *imageView;
+    
+    NSString *databasePath;
+
 }
 
 -(IBAction)displayContacts:(id)sender;
+
+-(BOOL)createDB;
+
+-(IBAction)getPhoto:(id)sender;
+
+@property (nonatomic, retain) NSArray *persons;
+@property (nonatomic) ABRecordID personID;
+@property (nonatomic, retain) NSMutableArray *imageURLs;
 
 @end

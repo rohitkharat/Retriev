@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12E3067" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First-->
@@ -51,6 +51,9 @@
                                 <state key="normal" title="Get Photos">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="getPhoto:" destination="Qh2-T1-AhA" eventType="touchUpInside" id="ckz-Q4-a0B"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0G-Ur-oOq">
                                 <rect key="frame" x="137" y="75" width="41" height="30"/>
@@ -62,6 +65,10 @@
                                     <action selector="displayContacts:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="jBg-VM-95z"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nrv-5L-dg5">
+                                <rect key="frame" x="20" y="195" width="280" height="165"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -73,6 +80,7 @@
                     <navigationItem key="navigationItem" title="Get Photos" id="lUL-iw-GaR"/>
                     <connections>
                         <outlet property="contactName" destination="6dJ-8n-66P" id="qZg-ZC-byg"/>
+                        <outlet property="imageView" destination="nrv-5L-dg5" id="eV8-Vd-jVG"/>
                         <outlet property="searchDisplayController" destination="uaH-dz-XaE" id="IWp-H4-FP7"/>
                     </connections>
                 </viewController>
