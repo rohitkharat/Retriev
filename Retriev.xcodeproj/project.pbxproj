@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2451837641900E0F77D /* RKKCameraViewController.m */; };
+		9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2481837657200E0F77D /* RKKTabViewController.m */; };
+		990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 990F48811838DE5C003CCB90 /* libsqlite3.dylib */; };
+		994A1DFF182DC5270065C8A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1DFE182DC5270065C8A9 /* Foundation.framework */; };
+		994A1E01182DC5270065C8A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1E00182DC5270065C8A9 /* CoreGraphics.framework */; };
+		994A1E03182DC5270065C8A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1E02182DC5270065C8A9 /* UIKit.framework */; };
+		994A1E09182DC5270065C8A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 994A1E07182DC5270065C8A9 /* InfoPlist.strings */; };
+		994A1E0B182DC5270065C8A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 994A1E0A182DC5270065C8A9 /* main.m */; };
+		994A1E0F182DC5270065C8A9 /* RKKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 994A1E0E182DC5270065C8A9 /* RKKAppDelegate.m */; };
+		994A1E12182DC5270065C8A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 994A1E10182DC5270065C8A9 /* Main.storyboard */; };
+		994A1E15182DC5270065C8A9 /* RKKFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 994A1E14182DC5270065C8A9 /* RKKFirstViewController.m */; };
+		994A1E18182DC5270065C8A9 /* RKKSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 994A1E17182DC5270065C8A9 /* RKKSecondViewController.m */; };
+		994A1E1A182DC5280065C8A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994A1E19182DC5280065C8A9 /* Images.xcassets */; };
+		994A1E21182DC5280065C8A9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1E20182DC5280065C8A9 /* XCTest.framework */; };
+		994A1E22182DC5280065C8A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1DFE182DC5270065C8A9 /* Foundation.framework */; };
+		994A1E23182DC5280065C8A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1E02182DC5270065C8A9 /* UIKit.framework */; };
+		994A1E2B182DC5280065C8A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 994A1E29182DC5280065C8A9 /* InfoPlist.strings */; };
+		994A1E2D182DC5280065C8A9 /* RetrievTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 994A1E2C182DC5280065C8A9 /* RetrievTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		994A1E24182DC5280065C8A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 994A1DF3182DC5270065C8A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 994A1DFA182DC5270065C8A9;
+			remoteInfo = Detrievo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9904F2441837641900E0F77D /* RKKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKCameraViewController.h; sourceTree = "<group>"; };
+		9904F2451837641900E0F77D /* RKKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKCameraViewController.m; sourceTree = "<group>"; };
+		9904F2471837657200E0F77D /* RKKTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKTabViewController.h; sourceTree = "<group>"; };
+		9904F2481837657200E0F77D /* RKKTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKTabViewController.m; sourceTree = "<group>"; };
+		990F48811838DE5C003CCB90 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		994A1DFB182DC5270065C8A9 /* Retriev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Retriev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		994A1DFE182DC5270065C8A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		994A1E00182DC5270065C8A9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		994A1E02182DC5270065C8A9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		994A1E06182DC5270065C8A9 /* Retriev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Retriev-Info.plist"; sourceTree = "<group>"; };
+		994A1E08182DC5270065C8A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		994A1E0A182DC5270065C8A9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		994A1E0C182DC5270065C8A9 /* Retriev-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Retriev-Prefix.pch"; sourceTree = "<group>"; };
+		994A1E0D182DC5270065C8A9 /* RKKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKKAppDelegate.h; sourceTree = "<group>"; };
+		994A1E0E182DC5270065C8A9 /* RKKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RKKAppDelegate.m; sourceTree = "<group>"; };
+		994A1E11182DC5270065C8A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		994A1E13182DC5270065C8A9 /* RKKFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKKFirstViewController.h; sourceTree = "<group>"; };
+		994A1E14182DC5270065C8A9 /* RKKFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RKKFirstViewController.m; sourceTree = "<group>"; };
+		994A1E16182DC5270065C8A9 /* RKKSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKKSecondViewController.h; sourceTree = "<group>"; };
+		994A1E17182DC5270065C8A9 /* RKKSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RKKSecondViewController.m; sourceTree = "<group>"; };
+		994A1E19182DC5280065C8A9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		994A1E1F182DC5280065C8A9 /* RetrievTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetrievTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		994A1E20182DC5280065C8A9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		994A1E28182DC5280065C8A9 /* RetrievTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RetrievTests-Info.plist"; sourceTree = "<group>"; };
+		994A1E2A182DC5280065C8A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		994A1E2C182DC5280065C8A9 /* RetrievTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RetrievTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		994A1DF8182DC5270065C8A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */,
+				994A1E01182DC5270065C8A9 /* CoreGraphics.framework in Frameworks */,
+				994A1E03182DC5270065C8A9 /* UIKit.framework in Frameworks */,
+				994A1DFF182DC5270065C8A9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994A1E1C182DC5280065C8A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				994A1E21182DC5280065C8A9 /* XCTest.framework in Frameworks */,
+				994A1E23182DC5280065C8A9 /* UIKit.framework in Frameworks */,
+				994A1E22182DC5280065C8A9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		994A1DF2182DC5270065C8A9 = {
+			isa = PBXGroup;
+			children = (
+				994A1E04182DC5270065C8A9 /* Retriev */,
+				994A1E26182DC5280065C8A9 /* DetrievoTests */,
+				994A1DFD182DC5270065C8A9 /* Frameworks */,
+				994A1DFC182DC5270065C8A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		994A1DFC182DC5270065C8A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				994A1DFB182DC5270065C8A9 /* Retriev.app */,
+				994A1E1F182DC5280065C8A9 /* RetrievTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		994A1DFD182DC5270065C8A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				990F48811838DE5C003CCB90 /* libsqlite3.dylib */,
+				994A1DFE182DC5270065C8A9 /* Foundation.framework */,
+				994A1E00182DC5270065C8A9 /* CoreGraphics.framework */,
+				994A1E02182DC5270065C8A9 /* UIKit.framework */,
+				994A1E20182DC5280065C8A9 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		994A1E04182DC5270065C8A9 /* Retriev */ = {
+			isa = PBXGroup;
+			children = (
+				994A1E0D182DC5270065C8A9 /* RKKAppDelegate.h */,
+				994A1E0E182DC5270065C8A9 /* RKKAppDelegate.m */,
+				994A1E10182DC5270065C8A9 /* Main.storyboard */,
+				9904F2441837641900E0F77D /* RKKCameraViewController.h */,
+				9904F2451837641900E0F77D /* RKKCameraViewController.m */,
+				994A1E13182DC5270065C8A9 /* RKKFirstViewController.h */,
+				994A1E14182DC5270065C8A9 /* RKKFirstViewController.m */,
+				994A1E16182DC5270065C8A9 /* RKKSecondViewController.h */,
+				994A1E17182DC5270065C8A9 /* RKKSecondViewController.m */,
+				9904F2471837657200E0F77D /* RKKTabViewController.h */,
+				9904F2481837657200E0F77D /* RKKTabViewController.m */,
+				994A1E19182DC5280065C8A9 /* Images.xcassets */,
+				994A1E05182DC5270065C8A9 /* Supporting Files */,
+			);
+			name = Retriev;
+			path = Detrievo;
+			sourceTree = "<group>";
+		};
+		994A1E05182DC5270065C8A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				994A1E06182DC5270065C8A9 /* Retriev-Info.plist */,
+				994A1E07182DC5270065C8A9 /* InfoPlist.strings */,
+				994A1E0A182DC5270065C8A9 /* main.m */,
+				994A1E0C182DC5270065C8A9 /* Retriev-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		994A1E26182DC5280065C8A9 /* DetrievoTests */ = {
+			isa = PBXGroup;
+			children = (
+				994A1E2C182DC5280065C8A9 /* RetrievTests.m */,
+				994A1E27182DC5280065C8A9 /* Supporting Files */,
+			);
+			path = DetrievoTests;
+			sourceTree = "<group>";
+		};
+		994A1E27182DC5280065C8A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				994A1E28182DC5280065C8A9 /* RetrievTests-Info.plist */,
+				994A1E29182DC5280065C8A9 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		994A1DFA182DC5270065C8A9 /* Retriev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 994A1E30182DC5280065C8A9 /* Build configuration list for PBXNativeTarget "Retriev" */;
+			buildPhases = (
+				994A1DF7182DC5270065C8A9 /* Sources */,
+				994A1DF8182DC5270065C8A9 /* Frameworks */,
+				994A1DF9182DC5270065C8A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Retriev;
+			productName = Detrievo;
+			productReference = 994A1DFB182DC5270065C8A9 /* Retriev.app */;
+			productType = "com.apple.product-type.application";
+		};
+		994A1E1E182DC5280065C8A9 /* RetrievTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 994A1E33182DC5280065C8A9 /* Build configuration list for PBXNativeTarget "RetrievTests" */;
+			buildPhases = (
+				994A1E1B182DC5280065C8A9 /* Sources */,
+				994A1E1C182DC5280065C8A9 /* Frameworks */,
+				994A1E1D182DC5280065C8A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				994A1E25182DC5280065C8A9 /* PBXTargetDependency */,
+			);
+			name = RetrievTests;
+			productName = DetrievoTests;
+			productReference = 994A1E1F182DC5280065C8A9 /* RetrievTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		994A1DF3182DC5270065C8A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = RKK;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = rkharat;
+				TargetAttributes = {
+					994A1DFA182DC5270065C8A9 = {
+						DevelopmentTeam = BWSLUFSJRA;
+					};
+					994A1E1E182DC5280065C8A9 = {
+						TestTargetID = 994A1DFA182DC5270065C8A9;
+					};
+				};
+			};
+			buildConfigurationList = 994A1DF6182DC5270065C8A9 /* Build configuration list for PBXProject "Retriev" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 994A1DF2182DC5270065C8A9;
+			productRefGroup = 994A1DFC182DC5270065C8A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				994A1DFA182DC5270065C8A9 /* Retriev */,
+				994A1E1E182DC5280065C8A9 /* RetrievTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		994A1DF9182DC5270065C8A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				994A1E1A182DC5280065C8A9 /* Images.xcassets in Resources */,
+				994A1E09182DC5270065C8A9 /* InfoPlist.strings in Resources */,
+				994A1E12182DC5270065C8A9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994A1E1D182DC5280065C8A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				994A1E2B182DC5280065C8A9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		994A1DF7182DC5270065C8A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				994A1E0B182DC5270065C8A9 /* main.m in Sources */,
+				994A1E0F182DC5270065C8A9 /* RKKAppDelegate.m in Sources */,
+				9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */,
+				994A1E15182DC5270065C8A9 /* RKKFirstViewController.m in Sources */,
+				994A1E18182DC5270065C8A9 /* RKKSecondViewController.m in Sources */,
+				9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994A1E1B182DC5280065C8A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				994A1E2D182DC5280065C8A9 /* RetrievTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		994A1E25182DC5280065C8A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 994A1DFA182DC5270065C8A9 /* Retriev */;
+			targetProxy = 994A1E24182DC5280065C8A9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		994A1E07182DC5270065C8A9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				994A1E08182DC5270065C8A9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		994A1E10182DC5270065C8A9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				994A1E11182DC5270065C8A9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		994A1E29182DC5280065C8A9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				994A1E2A182DC5280065C8A9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		994A1E2E182DC5280065C8A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		994A1E2F182DC5280065C8A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		994A1E31182DC5280065C8A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Detrievo/Retriev-Prefix.pch";
+				INFOPLIST_FILE = "Detrievo/Retriev-Info.plist";
+				PRODUCT_NAME = Retriev;
+				PROVISIONING_PROFILE = "E68890C4-3D5C-485A-B658-F30C8D14C930";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		994A1E32182DC5280065C8A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Detrievo/Retriev-Prefix.pch";
+				INFOPLIST_FILE = "Detrievo/Retriev-Info.plist";
+				PRODUCT_NAME = Retriev;
+				PROVISIONING_PROFILE = "E68890C4-3D5C-485A-B658-F30C8D14C930";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		994A1E34182DC5280065C8A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Detrievo.app/Detrievo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Detrievo/Detrievo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "DetrievoTests/RetrievTests-Info.plist";
+				PRODUCT_NAME = RetrievTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		994A1E35182DC5280065C8A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Detrievo.app/Detrievo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Detrievo/Detrievo-Prefix.pch";
+				INFOPLIST_FILE = "DetrievoTests/RetrievTests-Info.plist";
+				PRODUCT_NAME = RetrievTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		994A1DF6182DC5270065C8A9 /* Build configuration list for PBXProject "Retriev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				994A1E2E182DC5280065C8A9 /* Debug */,
+				994A1E2F182DC5280065C8A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		994A1E30182DC5280065C8A9 /* Build configuration list for PBXNativeTarget "Retriev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				994A1E31182DC5280065C8A9 /* Debug */,
+				994A1E32182DC5280065C8A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		994A1E33182DC5280065C8A9 /* Build configuration list for PBXNativeTarget "RetrievTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				994A1E34182DC5280065C8A9 /* Debug */,
+				994A1E35182DC5280065C8A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 994A1DF3182DC5270065C8A9 /* Project object */;
+}
