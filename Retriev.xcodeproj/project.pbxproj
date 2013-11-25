@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				994A1E04182DC5270065C8A9 /* Retriev */,
-				994A1E26182DC5280065C8A9 /* DetrievoTests */,
+				994A1E26182DC5280065C8A9 /* RetrievTests */,
 				994A1DFD182DC5270065C8A9 /* Frameworks */,
 				994A1DFC182DC5270065C8A9 /* Products */,
 			);
@@ -154,12 +154,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		994A1E26182DC5280065C8A9 /* DetrievoTests */ = {
+		994A1E26182DC5280065C8A9 /* RetrievTests */ = {
 			isa = PBXGroup;
 			children = (
 				994A1E2C182DC5280065C8A9 /* RetrievTests.m */,
 				994A1E27182DC5280065C8A9 /* Supporting Files */,
 			);
+			name = RetrievTests;
 			path = DetrievoTests;
 			sourceTree = "<group>";
 		};
