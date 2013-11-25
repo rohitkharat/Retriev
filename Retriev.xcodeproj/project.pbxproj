@@ -94,8 +94,8 @@
 		994A1DF2182DC5270065C8A9 = {
 			isa = PBXGroup;
 			children = (
-				994A1E04182DC5270065C8A9 /* Retriev */,
-				994A1E26182DC5280065C8A9 /* RetrievTests */,
+				994A1E04182DC5270065C8A9 /* Detrievo */,
+				994A1E26182DC5280065C8A9 /* DetrievoTests */,
 				994A1DFD182DC5270065C8A9 /* Frameworks */,
 				994A1DFC182DC5270065C8A9 /* Products */,
 			);
@@ -122,7 +122,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		994A1E04182DC5270065C8A9 /* Retriev */ = {
+		994A1E04182DC5270065C8A9 /* Detrievo */ = {
 			isa = PBXGroup;
 			children = (
 				994A1E0D182DC5270065C8A9 /* RKKAppDelegate.h */,
@@ -139,7 +139,6 @@
 				994A1E19182DC5280065C8A9 /* Images.xcassets */,
 				994A1E05182DC5270065C8A9 /* Supporting Files */,
 			);
-			name = Retriev;
 			path = Detrievo;
 			sourceTree = "<group>";
 		};
@@ -154,13 +153,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		994A1E26182DC5280065C8A9 /* RetrievTests */ = {
+		994A1E26182DC5280065C8A9 /* DetrievoTests */ = {
 			isa = PBXGroup;
 			children = (
 				994A1E2C182DC5280065C8A9 /* RetrievTests.m */,
 				994A1E27182DC5280065C8A9 /* Supporting Files */,
 			);
-			name = RetrievTests;
 			path = DetrievoTests;
 			sourceTree = "<group>";
 		};
