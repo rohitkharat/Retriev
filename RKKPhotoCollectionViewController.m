@@ -8,8 +8,15 @@
 
 #import "RKKPhotoCollectionViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Social/Social.h>
+
 
 @interface RKKPhotoCollectionViewController ()
+
+{
+    NSMutableArray *selectedRets;
+
+}
 
 @end
 
@@ -17,6 +24,7 @@
 @implementation RKKPhotoCollectionViewController
 
 @synthesize photosArray;
+@synthesize photoURLArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,11 +42,17 @@
     
     //initialize photos array here
     
+    self.collView.allowsMultipleSelection = YES;
+    
+    selectedRets = [NSMutableArray array];
+    self.photosArray = [[NSMutableArray alloc]init];
+
+    
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.photosArray.count;
+    return self.photoURLArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -47,17 +61,18 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
     
     //code to get image from url
-    NSURL *imageURL = [NSURL URLWithString:[self.photosArray objectAtIndex:indexPath.row]];
+    NSURL *imageURL = [NSURL URLWithString:[self.photoURLArray objectAtIndex:indexPath.row]];
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
      {
          UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
          
-         recipeImageView.image = copyOfOriginalImage;
+         imageView.image = copyOfOriginalImage;
+         [self.photosArray addObject:copyOfOriginalImage];
      }
             failureBlock:^(NSError *error)
      {
@@ -68,9 +83,75 @@
     
     //recipeImageView.image = [UIImage imageNamed:[self.photosArray objectAtIndex:indexPath.row]];
     
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
+
+    
     return cell;
     
 }
+
+- (IBAction)share:(id)sender {
+    
+    
+    // Post selected photos to Facebook
+    if ([selectedRets count] > 0) {
+        // if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [controller setInitialText:@"Check out the photos!"];
+        for (UIImage *retPhoto in self.photosArray) {
+            [controller addImage:retPhoto];
+        }
+        
+        [self presentViewController:controller animated:YES completion:Nil];
+    }
+    // }
+    
+    // Deselect all selected items
+    for(NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
+        [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    }
+    
+    // Remove all items from selectedRecipes array
+    [self.photosArray removeAllObjects];
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //   NSLog(@"hi ddude : %d  %d",indexPath.section,indexPath.row);
+    //   NSLog(@" %@",[retImages objectAtIndex:indexPath.row]);
+    
+    // Determine the selected items by using the indexPath
+    
+    // NSString *selectedRet = [retImages [indexPath.section] objectAtIndex:indexPath.row];
+    UIImage *selectedRet=    [self.photosArray objectAtIndex:indexPath.row];
+    // Add the selected item into the array
+    
+    [selectedRets addObject:selectedRet];
+    NSLog(@"select");
+    // NSLog(@"inserted %@ at index %d", selectedRet, indexPath.row);
+    //NSLog(@"%@", selectedRets);
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UIImage *deSelectedRet =[self.photosArray objectAtIndex:indexPath.row];
+    
+    [selectedRets removeObject:deSelectedRet];
+    NSLog(@"deselect");
+    //NSLog(@"%@", selectedRets);
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    return NO;
+    
+}
+
 
 -(IBAction)selectPhotos:(id)sender
 {

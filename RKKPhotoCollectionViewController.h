@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RKKPhotoCollectionViewController : UICollectionViewController
+@interface RKKPhotoCollectionViewController : UICollectionViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 
 {
@@ -16,7 +16,14 @@
     IBOutlet UIBarButtonItem *selectButton;
 }
 
+@property (nonatomic, strong) NSMutableArray *photoURLArray;
 @property (nonatomic, strong) NSMutableArray *photosArray;
+
+@property(weak, nonatomic) IBOutlet UICollectionView *collView;
+
+- (IBAction)collageMaking:(id)sender;
+- (IBAction)share:(id)sender;
+
 
 -(IBAction)selectPhotos:(id)sender;
 

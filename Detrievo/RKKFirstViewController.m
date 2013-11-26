@@ -265,7 +265,7 @@ static sqlite3_stmt *statement = nil;
     if ([segue.identifier isEqualToString:@"showPhotos"]) {
         
         RKKPhotoCollectionViewController *photoCollectionViewController = [segue destinationViewController];
-        photoCollectionViewController.photosArray = self.imageURLs;
+        photoCollectionViewController.photoURLArray = self.imageURLs;
     }
 }
 
