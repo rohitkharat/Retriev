@@ -72,6 +72,14 @@
     
 }
 
+-(IBAction)selectPhotos:(id)sender
+{
+    NSLog(@"select button clicked");
+    //create collectionView property, link with storyboard, copy code from retPhotos
+    self.collectionView.allowsMultipleSelection = TRUE;
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

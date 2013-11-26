@@ -114,7 +114,7 @@
             </objects>
             <point key="canvasLocation" x="1179" y="-138"/>
         </scene>
-        <!--Photo Collection View Controller-->
+        <!--Photo Collection View Controller - Photos-->
         <scene sceneID="xXd-hS-AhP">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="6Jl-F3-RlJ" customClass="RKKPhotoCollectionViewController" sceneMemberID="viewController">
@@ -135,7 +135,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v7L-6E-zYC">
+                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v7L-6E-zYC">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -149,7 +149,13 @@
                             <outlet property="delegate" destination="6Jl-F3-RlJ" id="jLZ-LO-W32"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="066-e8-h1B"/>
+                    <navigationItem key="navigationItem" title="Photos" id="066-e8-h1B">
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="wNP-xR-RMA">
+                            <connections>
+                                <action selector="selectPhotos:" destination="6Jl-F3-RlJ" id="fEd-L2-8y5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLc-Ud-xFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

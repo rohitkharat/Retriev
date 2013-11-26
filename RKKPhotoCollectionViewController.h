@@ -13,8 +13,11 @@
 
 {
     //NSArray *photosArray;
+    IBOutlet UIBarButtonItem *selectButton;
 }
 
 @property (nonatomic, strong) NSMutableArray *photosArray;
+
+-(IBAction)selectPhotos:(id)sender;
 
 @end
