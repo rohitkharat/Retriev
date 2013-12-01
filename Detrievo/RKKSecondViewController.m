@@ -9,6 +9,8 @@
 #import "RKKSecondViewController.h"
 #import <CoreImage/CoreImage.h>
 #import <QuartzCore/QuartzCore.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
 
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
@@ -93,6 +95,12 @@ static sqlite3_stmt *statement = nil;
     [self createDB];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    [self showPhotoLibrary:nil];
+    
+}
+
+-(IBAction)showPhotoLibrary:(id)sender
+{
     self.imagePicker = [[UIImagePickerController alloc]init];
     self.imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
     self.imagePicker.allowsEditing = YES;
@@ -100,17 +108,19 @@ static sqlite3_stmt *statement = nil;
     self.imagePicker.delegate = self;
     
     [self presentViewController:self.imagePicker animated:YES completion:nil];
-    
 }
 
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
+    taggedMyself = FALSE;
+    
     UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
   //  [self.imageView setFrame:CGRectMake(0, 0, selectedImage.size.width, selectedImage.size.height)];
 
     self.imgURLString = [info objectForKey:UIImagePickerControllerReferenceURL];
+    self.imgURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     //print file name
     NSLog(@"image url is %@", self.imgURLString);
     
@@ -232,10 +242,13 @@ for (CIFaceFeature *faceFeature in self.facesArray)
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         //tag myself
         taggedMyself = TRUE;
+        [self tagPerson:99999];
+
     }
     else
     {
         [self displayContacts];
+        
     }
 }
 
@@ -365,7 +378,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             NSLog(@"error %s", error);
         }
         
-        NSString *insertPhotoSQL = [NSString stringWithFormat:@"INSERT INTO PHOTOS VALUES (\"%@\")", self.imgURLString];
+        NSString *insertPhotoSQL = [NSString stringWithFormat:@"INSERT INTO PHOTOS VALUES (\"%@\")", self.imgURL];
         insert_stmt = [insertPhotoSQL UTF8String];
         
         if (sqlite3_exec(database, insert_stmt, NULL, NULL, &error) == SQLITE_OK) {
@@ -377,7 +390,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         }
         
         
-        NSString *querySQL = [NSString stringWithFormat:@"select id from mappings where personid = \'%d\' and img_url = \"%@\" ", recordID, self.imgURLString];
+        NSString *querySQL = [NSString stringWithFormat:@"select id from mappings where personid = \'%d\' and img_url = \"%@\" ", recordID, self.imgURL];
         const char *select_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database,
@@ -386,11 +399,17 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
                 NSLog(@"mapping already exists");
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"This person has already been tagged in this photo!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
             }
             
             else
             {
-                NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\" )", recordID, self.imgURLString];
+               // NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL, CITY) VALUES (\"%d\",\"%@\" ,\"%@\")", recordID, self.imgURLString, [self getPhotoLocation]];
+                
+                //without city
+                 NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\")", recordID, self.imgURL];
+                
                 insert_stmt = [insertMappingSQL UTF8String];
                 
                 if (sqlite3_exec(database, insert_stmt, NULL, NULL, &error) == SQLITE_OK) {
@@ -414,6 +433,60 @@ for (CIFaceFeature *faceFeature in self.facesArray)
     }
     
     sqlite3_close(database);
+
+}
+
+-(NSString *)getPhotoLocation
+{
+    NSLog(@"getting photo with url: %@", self.imgURL);
+   // NSURL *imageURL = [NSURL URLWithString:self.imgURLString];
+    
+    //getting exception here!!
+    //remove exception
+    //remove unwanted code from other first view controller like use of RKKRetrievedPhoto Object
+    //make sure city is getting inserted
+    //work on city search display controller
+    //check if code takes both search criteria if city and name is selected
+    
+    NSLog(@"got URL");
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:self.imgURL resultBlock:^(ALAsset *asset)
+     {
+         CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
+         NSLog(@"got location");
+         CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+         [geocoder reverseGeocodeLocation:location
+                        completionHandler:^(NSArray *placemarks, NSError *error) {
+                            NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
+                            
+                            if (error){
+                                NSLog(@"Geocode failed with error: %@", error);
+                                return;
+                                
+                            }
+                            
+                            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                            
+                            NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+                            NSLog(@"placemark.country %@",placemark.country);
+                            NSLog(@"placemark.postalCode %@",placemark.postalCode);
+                            NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+                            NSLog(@"placemark.locality %@",placemark.locality);
+                            NSLog(@"placemark.subLocality %@",placemark.subLocality);
+                            NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+                            
+                            self.city = placemark.locality;
+                            
+                        }];
+         
+     }
+            failureBlock:^(NSError *error)
+     {
+         // error handling
+         NSLog(@"failure-----");
+     }];
+
+    return self.city;
 
 }
 

@@ -21,6 +21,11 @@
 }
 
 -(BOOL)createDB;
+-(NSString *)getPhotoLocation;
+
+-(IBAction)showPhotoLibrary:(id)sender;
+
+
 
 @property (nonatomic, retain)  UIImagePickerController *imagePicker;
 @property (nonatomic, retain)  IBOutlet UIImageView *imageView;
@@ -29,6 +34,10 @@
 @property (nonatomic, retain) CIImage *selectedImage;
 
 @property (nonatomic, strong) NSString *imgURLString;
+
+@property (nonatomic, retain) NSString *city;
+
+@property (nonatomic, retain) NSURL *imgURL;
 
 //@property (nonatomic) CGPoint leftEyePosition;
 //@property (nonatomic) CGPoint rightEyePosition;

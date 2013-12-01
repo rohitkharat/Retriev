@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		712269C8184B3E9900C7C815 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269C4184B3E9900C7C815 /* add.png */; };
+		712269CA184B3E9900C7C815 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269C6184B3E9900C7C815 /* share.png */; };
+		712269CB184B3E9900C7C815 /* UIBarButtonCamera_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269C7184B3E9900C7C815 /* UIBarButtonCamera_2x.png */; };
+		712269D0184B468C00C7C815 /* tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269CD184B468C00C7C815 /* tag.png */; };
+		712269D1184B468C00C7C815 /* multiple_tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269CE184B468C00C7C815 /* multiple_tags.png */; };
+		712269D3184B474100C7C815 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269D2184B474100C7C815 /* camera.png */; };
+		712269D7184B4B4200C7C815 /* magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269D6184B4B4200C7C815 /* magnify.png */; };
+		712269D9184B643300C7C815 /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269D8184B643300C7C815 /* redo.png */; };
 		712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712DF07E1843507F00F0A108 /* AssetsLibrary.framework */; };
 		714341751843BC9A00C179AD /* RKKPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */; };
 		714341A21844517A00C179AD /* footer_banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 7143419F1844517A00C179AD /* footer_banner.png */; };
@@ -45,6 +53,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		712269C4184B3E9900C7C815 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		712269C6184B3E9900C7C815 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		712269C7184B3E9900C7C815 /* UIBarButtonCamera_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonCamera_2x.png; sourceTree = "<group>"; };
+		712269CD184B468C00C7C815 /* tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag.png; sourceTree = "<group>"; };
+		712269CE184B468C00C7C815 /* multiple_tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiple_tags.png; sourceTree = "<group>"; };
+		712269D2184B474100C7C815 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		712269D6184B4B4200C7C815 /* magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magnify.png; sourceTree = "<group>"; };
+		712269D8184B643300C7C815 /* redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redo.png; sourceTree = "<group>"; };
 		712DF07E1843507F00F0A108 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKKPhotoCollectionViewController.h; path = ../RKKPhotoCollectionViewController.h; sourceTree = "<group>"; };
 		714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKPhotoCollectionViewController.m; path = ../RKKPhotoCollectionViewController.m; sourceTree = "<group>"; };
@@ -109,11 +125,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		712269C3184B3E6700C7C815 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				712269D8184B643300C7C815 /* redo.png */,
+				712269D6184B4B4200C7C815 /* magnify.png */,
+				712269D2184B474100C7C815 /* camera.png */,
+				712269CD184B468C00C7C815 /* tag.png */,
+				712269CE184B468C00C7C815 /* multiple_tags.png */,
+				712269C4184B3E9900C7C815 /* add.png */,
+				712269C6184B3E9900C7C815 /* share.png */,
+				712269C7184B3E9900C7C815 /* UIBarButtonCamera_2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		994A1DF2182DC5270065C8A9 = {
 			isa = PBXGroup;
 			children = (
 				994A1E04182DC5270065C8A9 /* Detrievo */,
 				994A1E26182DC5280065C8A9 /* DetrievoTests */,
+				712269C3184B3E6700C7C815 /* images */,
 				994A1DFD182DC5270065C8A9 /* Frameworks */,
 				994A1DFC182DC5270065C8A9 /* Products */,
 			);
@@ -149,17 +181,17 @@
 				994A1E0E182DC5270065C8A9 /* RKKAppDelegate.m */,
 				994A1E10182DC5270065C8A9 /* Main.storyboard */,
 				714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */,
+				714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */,
 				714341A51845823B00C179AD /* RKKRetrievedPhoto.h */,
 				714341A61845823B00C179AD /* RKKRetrievedPhoto.m */,
-				714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */,
-				9904F2441837641900E0F77D /* RKKCameraViewController.h */,
-				9904F2451837641900E0F77D /* RKKCameraViewController.m */,
 				994A1E13182DC5270065C8A9 /* RKKFirstViewController.h */,
 				994A1E14182DC5270065C8A9 /* RKKFirstViewController.m */,
 				994A1E16182DC5270065C8A9 /* RKKSecondViewController.h */,
 				994A1E17182DC5270065C8A9 /* RKKSecondViewController.m */,
 				9904F2471837657200E0F77D /* RKKTabViewController.h */,
 				9904F2481837657200E0F77D /* RKKTabViewController.m */,
+				9904F2441837641900E0F77D /* RKKCameraViewController.h */,
+				9904F2451837641900E0F77D /* RKKCameraViewController.m */,
 				994A1E19182DC5280065C8A9 /* Images.xcassets */,
 				994A1E05182DC5270065C8A9 /* Supporting Files */,
 			);
@@ -278,9 +310,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				712269C8184B3E9900C7C815 /* add.png in Resources */,
+				712269CA184B3E9900C7C815 /* share.png in Resources */,
 				714341A41844517A00C179AD /* photo-frame.png in Resources */,
+				712269D1184B468C00C7C815 /* multiple_tags.png in Resources */,
+				712269D0184B468C00C7C815 /* tag.png in Resources */,
+				712269D7184B4B4200C7C815 /* magnify.png in Resources */,
 				714341A31844517A00C179AD /* header_banner.png in Resources */,
+				712269D9184B643300C7C815 /* redo.png in Resources */,
 				714341A21844517A00C179AD /* footer_banner.png in Resources */,
+				712269CB184B3E9900C7C815 /* UIBarButtonCamera_2x.png in Resources */,
+				712269D3184B474100C7C815 /* camera.png in Resources */,
 				994A1E1A182DC5280065C8A9 /* Images.xcassets in Resources */,
 				994A1E09182DC5270065C8A9 /* InfoPlist.strings in Resources */,
 				994A1E12182DC5270065C8A9 /* Main.storyboard in Resources */,

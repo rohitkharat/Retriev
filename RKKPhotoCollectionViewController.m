@@ -7,6 +7,7 @@
 //
 
 #import "RKKPhotoCollectionViewController.h"
+#import "RKKRetrievedPhoto.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Social/Social.h>
 
@@ -45,14 +46,14 @@
     self.collView.allowsMultipleSelection = YES;
     
     selectedRets = [NSMutableArray array];
-    self.photosArray = [[NSMutableArray alloc]init];
+    //self.photosArray = [[NSMutableArray alloc]init];
 
     
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.photoURLArray.count;
+    return self.photosArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -63,23 +64,7 @@
     
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
     
-    //code to get image from url
-    NSURL *imageURL = [NSURL URLWithString:[self.photoURLArray objectAtIndex:indexPath.row]];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
-     {
-         UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
-         
-         imageView.image = copyOfOriginalImage;
-         [self.photosArray addObject:copyOfOriginalImage];
-     }
-            failureBlock:^(NSError *error)
-     {
-         // error handling
-         NSLog(@"failure-----");
-     }];
-
+    imageView.image = [self.photosArray objectAtIndex:indexPath.row];
     
     //recipeImageView.image = [UIImage imageNamed:[self.photosArray objectAtIndex:indexPath.row]];
     
@@ -99,7 +84,7 @@
         SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
         [controller setInitialText:@"Check out the photos!"];
-        for (UIImage *retPhoto in self.photosArray) {
+        for (UIImage *retPhoto in selectedRets) {
             [controller addImage:retPhoto];
         }
         

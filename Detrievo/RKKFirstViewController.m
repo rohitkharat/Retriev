@@ -11,6 +11,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
 
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
@@ -24,6 +25,8 @@ static sqlite3_stmt *statement = nil;
 
 @implementation RKKFirstViewController
 
+@synthesize contactName;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,8 +34,13 @@ static sqlite3_stmt *statement = nil;
     
     [self createDB];
     self.imageURLs = [[NSMutableArray alloc]init];
+    self.images = [[NSMutableArray alloc]init];
+    self.filteredImages = [[NSMutableArray alloc]init];
+    self.retrievedPhotosArray = [[NSMutableArray alloc]init];
+    retrievedPhoto = [[RKKRetrievedPhoto alloc]init];
     imagesFound = FALSE;
-    
+    self.citySelected = FALSE;
+    self.datesSelected = FALSE;
 }
 
 -(BOOL)createDB{
@@ -60,7 +68,7 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE IF NOT EXISTS PHOTOS (IMG_URL TEXT PRIMARY KEY)";
             
             const char *sql_stmt_3 =
-            "CREATE TABLE IF NOT EXISTS MAPPINGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, PERSONID INTEGER, IMG_URL TEXT) ";
+            "CREATE TABLE IF NOT EXISTS MAPPINGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, PERSONID INTEGER, IMG_URL TEXT, CITY TEXT) ";
             
             if (sqlite3_exec(database, sql_stmt, NULL, NULL, &errMsg)
                 != SQLITE_OK)
@@ -175,9 +183,24 @@ static sqlite3_stmt *statement = nil;
     
     NSLog(@"Name and ID: %@ %@ %d", firstName, lastName, self.personID);
     [self dismissViewControllerAnimated:picker completion:nil];
-    [contactName setText: [NSString stringWithFormat:@"%@ %@", firstName, lastName]];
+    [self.contactName setText: [NSString stringWithFormat:@"%@ %@", firstName, lastName]];
+    [self.contactName setHidden:FALSE];
+    [self.myselfButton setHidden:TRUE];
+    [self.personButton setHidden:TRUE];
+    [self.resetButton setHidden:FALSE];
+    //[self getPhotos];
+
   //  [firstName stringByAppendingString:(lastName)]
 	return NO;
+}
+
+-(IBAction)reset:(id)sender
+{
+    [self.contactName setHidden:TRUE];
+    [self.myselfButton setHidden:FALSE];
+    [self.personButton setHidden:FALSE];
+    [self.resetButton setHidden:TRUE];
+    myself = FALSE;
 }
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
@@ -201,10 +224,31 @@ static sqlite3_stmt *statement = nil;
 	return NO;
 }
 
--(IBAction)getPhoto:(id)sender
+-(IBAction)setMyself:(id)sender
+{
+    myself = TRUE;
+    
+    [self.contactName setText: @"Myself"];
+    [self.contactName setHidden:FALSE];
+    [self.myselfButton setHidden:TRUE];
+    [self.personButton setHidden:TRUE];
+    [self.resetButton setHidden:FALSE];
+
+    
+}
+
+
+-(BOOL)getPhotos
 {
     //clear the existing images in array
     [self.imageURLs removeAllObjects];
+    [self.retrievedPhotosArray removeAllObjects];
+    [self.images removeAllObjects];
+    imagesFound = FALSE;
+    
+    if (myself) {
+        self.personID = 99999;
+    }
     
     //get person id, city and date range from model
     const char *dbPath = [databasePath UTF8String];
@@ -213,14 +257,23 @@ static sqlite3_stmt *statement = nil;
     {
         
         char *error;
+        NSString *querySQL;
+        if (self.citySelected)
+        {
+            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\' and city = \'%@\'", self.personID, self.city];
+        }
+        else
+        {
+            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
+        }
         
-        NSString *querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
         const char *select_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database,
                                select_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             int count = 0;
+            
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 count++;
@@ -251,21 +304,108 @@ static sqlite3_stmt *statement = nil;
     
     sqlite3_close(database);
     
+    //code to get image from url
+    for(NSString *imageURLString in self.imageURLs)
+    {
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
+         {
+             UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
+             
+             //add the image to a cell in the collection view
+             //imageView.image = copyOfOriginalImage;
+             
+             //add the asset details in the retrievedPhoto object
+             retrievedPhoto = [[RKKRetrievedPhoto alloc]init];
+             
+             retrievedPhoto.photoURL = imageURL;
+             retrievedPhoto.photoLocation = [asset valueForProperty:ALAssetPropertyLocation];
+             retrievedPhoto.photoDate = [asset valueForProperty:ALAssetPropertyDate];
+             retrievedPhoto.image = copyOfOriginalImage;
+             
+             [self.images addObject:copyOfOriginalImage];
+             [self.retrievedPhotosArray addObject:retrievedPhoto];
+             NSLog(@"retrievedPhotosArray count = %lu", (unsigned long)self.retrievedPhotosArray.count);
+         }
+                failureBlock:^(NSError *error)
+         {
+             // error handling
+             NSLog(@"failure-----");
+         }];
+    }
+    
+    return imagesFound;
+    
 }
+
+-(NSMutableArray *)checkRetrievedPhotos:(NSMutableArray *)retrievedPhotos
+{
+    NSLog(@"checking search criteria");
+    if (self.citySelected && !self.datesSelected)
+    {
+        NSLog(@"city selected date not selected");
+        for (RKKRetrievedPhoto *photo in self.retrievedPhotosArray)
+        {
+            CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+            [geocoder reverseGeocodeLocation:photo.photoLocation
+                           completionHandler:^(NSArray *placemarks, NSError *error) {
+                               NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
+                               
+                       if (error){
+                           NSLog(@"Geocode failed with error: %@", error);
+                           return;
+                           
+                       }
+                       
+                       
+                       CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                       
+                       NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+                       NSLog(@"placemark.country %@",placemark.country);
+                       NSLog(@"placemark.postalCode %@",placemark.postalCode);
+                       NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+                       NSLog(@"placemark.locality %@",placemark.locality);
+                       NSLog(@"placemark.subLocality %@",placemark.subLocality);
+                       NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+                       
+                   }];
+        }
+    }
+    else if (!self.citySelected && self.datesSelected)
+    {
+        NSLog(@"city not selected, date selected");
+        
+    }
+    else
+    {
+        NSLog(@"city and date selected");
+        
+    }
+    return self.filteredImages;
+    
+}
+
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    return imagesFound;
+ 
+    return [self getPhotos];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"number of url's being sent = %d", self.imageURLs.count);
+
+    NSLog(@"number of photos being sent = %d", self.retrievedPhotosArray.count);
     
-    if ([segue.identifier isEqualToString:@"showPhotos"]) {
+    if ([segue.identifier isEqualToString:@"showPhotos"])
+    {
         
         RKKPhotoCollectionViewController *photoCollectionViewController = [segue destinationViewController];
-        photoCollectionViewController.photoURLArray = self.imageURLs;
+        
+        photoCollectionViewController.photosArray = self.images;
+        
     }
 }
 

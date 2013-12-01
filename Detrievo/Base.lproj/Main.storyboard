@@ -16,35 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dJ-8n-66P">
-                                <rect key="frame" x="20" y="383" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUF-it-ahU">
-                                <rect key="frame" x="20" y="412" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dates..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xe2-cb-3Lv">
-                                <rect key="frame" x="20" y="441" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Location" translatesAutoresizingMaskIntoConstraints="NO" id="Ck1-4F-qkD">
-                                <rect key="frame" x="0.0" y="111" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="CZ4-MO-1fc" id="8Eo-en-thN"/>
-                                </connections>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn2-05-vqK">
                                 <rect key="frame" x="121" y="470" width="78" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -52,65 +23,84 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="getPhoto:" destination="Qh2-T1-AhA" eventType="touchUpInside" id="ckz-Q4-a0B"/>
-                                    <segue destination="6Jl-F3-RlJ" kind="push" identifier="showPhotos" id="41r-Bd-pQD"/>
+                                    <segue destination="6Jl-F3-RlJ" kind="push" identifier="showPhotos" id="jAI-wa-ruc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0G-Ur-oOq">
-                                <rect key="frame" x="137" y="75" width="41" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0G-Ur-oOq">
+                                <rect key="frame" x="194" y="254" width="111" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Name">
+                                <state key="normal" title="Another Person">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="displayContacts:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="jBg-VM-95z"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nrv-5L-dg5">
-                                <rect key="frame" x="20" y="195" width="280" height="165"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Get Photos of" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nd5-RY-mdm">
+                                <rect key="frame" x="15" y="258" width="94" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySa-Zc-Qx1">
+                                <rect key="frame" x="129" y="254" width="45" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Myself">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setMyself:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="muf-UV-WmN"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Clicked in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6YN-X8-WHf">
+                                <rect key="frame" x="15" y="287" width="94" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXM-ij-Mgc">
+                                <rect key="frame" x="129" y="284" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Location">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5FP-UF-k2V">
+                                <rect key="frame" x="129" y="288" width="171" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tK0-G8-BrL">
+                                <rect key="frame" x="129" y="258" width="171" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Oc-Gk-qF4">
+                                <rect key="frame" x="270" y="271" width="30" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="redo.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="reset:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="tbp-UX-37m"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="m0G-Ur-oOq" secondAttribute="trailing" constant="142" id="A0S-x5-Xk2"/>
-                            <constraint firstItem="m0G-Ur-oOq" firstAttribute="top" secondItem="QHO-yN-0dO" secondAttribute="bottom" constant="11" id="OmO-5W-6Vm"/>
-                            <constraint firstItem="m0G-Ur-oOq" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" constant="137" id="a3O-DE-RlV"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Get Photos" id="lUL-iw-GaR"/>
                     <connections>
-                        <outlet property="contactName" destination="6dJ-8n-66P" id="qZg-ZC-byg"/>
-                        <outlet property="imageView" destination="nrv-5L-dg5" id="eV8-Vd-jVG"/>
-                        <outlet property="searchDisplayController" destination="uaH-dz-XaE" id="IWp-H4-FP7"/>
+                        <outlet property="contactName" destination="tK0-G8-BrL" id="o6G-hX-mPr"/>
+                        <outlet property="myselfButton" destination="ySa-Zc-Qx1" id="pZq-O1-9j1"/>
+                        <outlet property="personButton" destination="m0G-Ur-oOq" id="8zU-E0-jVE"/>
+                        <outlet property="resetButton" destination="8Oc-Gk-qF4" id="qI7-nQ-D8M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="VWF-LM-UWO">
-                    <connections>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="JgV-GB-FYE"/>
-                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="bVb-hI-XMj"/>
-                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="wJr-Fb-FAG"/>
-                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="MUb-cV-NAd"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="CN3-ht-PYL">
-                    <connections>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="CUM-S7-cqE"/>
-                        <outlet property="searchBar" destination="Ck1-4F-qkD" id="prR-W2-6s3"/>
-                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="CzN-52-t9V"/>
-                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="LEL-8j-Ngb"/>
-                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="dmV-RV-H9o"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="uaH-dz-XaE">
-                    <connections>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="Wx6-fY-1s9"/>
-                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="L6E-nn-MM6"/>
-                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="eBo-Rc-aBD"/>
-                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="Kvw-4e-EIQ"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1179" y="-138"/>
         </scene>
@@ -197,13 +187,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MZL-zF-jgv">
-                                <rect key="frame" x="0.0" y="49" width="320" height="418"/>
+                                <rect key="frame" x="0.0" y="84" width="320" height="322"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTm-sq-pPE">
+                                <rect key="frame" x="0.0" y="474" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Tag Another Photo" width="310" id="YEj-TQ-STj">
+                                        <connections>
+                                            <action selector="showPhotoLibrary:" destination="QUy-BD-bpt" id="lWa-vo-243"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="Z7h-1E-pvt"/>
+                    <tabBarItem key="tabBarItem" title="" image="tag.png" id="Z7h-1E-pvt"/>
                     <connections>
                         <outlet property="imageView" destination="MZL-zF-jgv" id="OfG-oh-A6f"/>
                     </connections>
@@ -232,11 +233,11 @@
             </objects>
             <point key="canvasLocation" x="-84" y="217"/>
         </scene>
-        <!--Navigation Controller - First-->
+        <!--Navigation Controller-->
         <scene sceneID="nWt-A4-Bs1">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hfi-hN-K6G" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="u1e-5L-l1D"/>
+                    <tabBarItem key="tabBarItem" title="" image="magnify.png" id="u1e-5L-l1D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jOS-tJ-fDa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -251,11 +252,13 @@
             </objects>
             <point key="canvasLocation" x="653" y="-138"/>
         </scene>
-        <!--Navigation Controller - Click Photo-->
+        <!--Navigation Controller-->
         <scene sceneID="f5b-DH-puN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vQD-jK-wfh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Click Photo" id="e7N-BE-afU"/>
+                    <tabBarItem key="tabBarItem" title="" image="camera.png" id="e7N-BE-afU">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="viC-uj-GDc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -272,8 +275,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
+        <image name="camera.png" width="24" height="18"/>
+        <image name="magnify.png" width="24" height="24"/>
+        <image name="redo.png" width="30" height="26"/>
+        <image name="tag.png" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
