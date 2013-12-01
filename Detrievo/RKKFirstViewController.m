@@ -16,7 +16,7 @@
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
-@interface RKKFirstViewController () <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
+@interface RKKFirstViewController () <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
 
 @property (nonatomic, assign) ABAddressBookRef addressBook;
 @property (nonatomic, strong) NSMutableArray *contactsArray;
@@ -24,6 +24,8 @@ static sqlite3_stmt *statement = nil;
 @end
 
 @implementation RKKFirstViewController
+
+NSArray *searchResults;
 
 @synthesize contactName;
 
@@ -41,6 +43,8 @@ static sqlite3_stmt *statement = nil;
     imagesFound = FALSE;
     self.citySelected = FALSE;
     self.datesSelected = FALSE;
+    
+    self.citiesArray = [[NSMutableArray alloc]initWithObjects:@"New York", @"Phoenix",@"Los Angeles", @"Mumbai",@"San Jose", @"San Diego", @"Tempe", nil ];
 }
 
 -(BOOL)createDB{
@@ -408,6 +412,70 @@ static sqlite3_stmt *statement = nil;
         
     }
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [searchResults count];
+        
+    } else {
+        return [self.citiesArray count];
+        
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *simpleTableIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell.textLabel.text = [searchResults objectAtIndex:indexPath.row];
+    } else {
+        cell.textLabel.text = [self.citiesArray objectAtIndex:indexPath.row];
+    }
+    return cell;
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate
+                                    predicateWithFormat:@"SELF contains[cd] %@",
+                                    searchText];
+    
+    searchResults = [self.citiesArray filteredArrayUsingPredicate:resultPredicate];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller
+shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
+-(IBAction)showSearchDisplayController:(id)sender
+{
+    [self.searchDisplayController setActive:YES animated:YES];
+    [self.searchDisplayController.searchBar setHidden:FALSE];
+    [self.searchDisplayController.searchBar setShowsScopeBar:FALSE];
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchDisplayController.searchBar setHidden:TRUE];
+
+}
+
 
 
 - (void)didReceiveMemoryWarning

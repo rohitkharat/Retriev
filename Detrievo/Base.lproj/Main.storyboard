@@ -66,6 +66,9 @@
                                 <state key="normal" title="Location">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="showSearchDisplayController:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="u32-Py-L9M"/>
+                                </connections>
                             </button>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5FP-UF-k2V">
                                 <rect key="frame" x="129" y="288" width="171" height="21"/>
@@ -74,7 +77,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tK0-G8-BrL">
-                                <rect key="frame" x="129" y="258" width="171" height="21"/>
+                                <rect key="frame" x="129" y="259" width="171" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <nil key="highlightedColor"/>
@@ -89,6 +92,18 @@
                                     <action selector="reset:" destination="CZ4-MO-1fc" eventType="touchUpInside" id="tbp-UX-37m"/>
                                 </connections>
                             </button>
+                            <searchBar hidden="YES" contentMode="redraw" fixedFrame="YES" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gD-UB-lfF">
+                                <rect key="frame" x="0.0" y="65" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="CZ4-MO-1fc" id="Zvt-PE-7X1"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -98,9 +113,20 @@
                         <outlet property="myselfButton" destination="ySa-Zc-Qx1" id="pZq-O1-9j1"/>
                         <outlet property="personButton" destination="m0G-Ur-oOq" id="8zU-E0-jVE"/>
                         <outlet property="resetButton" destination="8Oc-Gk-qF4" id="qI7-nQ-D8M"/>
+                        <outlet property="searchBar" destination="5gD-UB-lfF" id="igP-5T-uNG"/>
+                        <outlet property="searchDisplayController" destination="paq-dG-zPC" id="cJU-tj-SDA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="paq-dG-zPC">
+                    <connections>
+                        <outlet property="delegate" destination="CZ4-MO-1fc" id="JL7-lr-vLi"/>
+                        <outlet property="searchBar" destination="5gD-UB-lfF" id="NgG-6A-NzB"/>
+                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="5oZ-y7-ECW"/>
+                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="qdb-IP-Kjl"/>
+                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="itX-ip-YOU"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1179" y="-138"/>
         </scene>

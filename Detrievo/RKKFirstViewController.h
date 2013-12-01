@@ -34,6 +34,8 @@
 
 -(NSMutableArray *)checkRetrievedPhotos:(NSMutableArray *)retrievedPhotos;
 
+-(IBAction)showSearchDisplayController:(id)sender;
+
 -(IBAction)reset:(id)sender;
 -(IBAction)setMyself:(id)sender;
 
@@ -55,5 +57,9 @@
 @property (nonatomic, retain) IBOutlet UIButton *myselfButton;
 @property (nonatomic, retain) IBOutlet UIButton *personButton;
 @property (nonatomic, retain) IBOutlet UIButton *resetButton;
+
+@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) NSMutableArray *citiesArray;
+@property (nonatomic, strong) IBOutlet UITableView *searchResults;
 
 @end
