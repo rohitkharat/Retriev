@@ -43,8 +43,12 @@ NSArray *searchResults;
     imagesFound = FALSE;
     self.citySelected = FALSE;
     self.datesSelected = FALSE;
+    self.personSelected = FALSE;
     
-    self.citiesArray = [[NSMutableArray alloc]initWithObjects:@"New York", @"Phoenix",@"Los Angeles", @"Mumbai",@"San Jose", @"San Diego", @"Tempe", nil ];
+    self.citiesArray = [[NSMutableArray alloc]init];
+    
+    NSArray *personids = [NSArray arrayWithObjects:@"2", nil];
+    [self getQuery: [NSMutableArray arrayWithArray:personids]];
 }
 
 -(BOOL)createDB{
@@ -95,8 +99,6 @@ NSArray *searchResults;
                 NSLog(@"Failed to create table MAPPINGS");
             }
             
-            
-            
             sqlite3_close(database);
             return  isSuccess;
         }
@@ -107,6 +109,7 @@ NSArray *searchResults;
             NSLog(@"Failed to open/create database");
         }
     }
+
     return isSuccess;
 }
 
@@ -192,6 +195,7 @@ NSArray *searchResults;
     [self.myselfButton setHidden:TRUE];
     [self.personButton setHidden:TRUE];
     [self.resetButton setHidden:FALSE];
+    self.personSelected = TRUE;
     //[self getPhotos];
 
   //  [firstName stringByAppendingString:(lastName)]
@@ -204,7 +208,14 @@ NSArray *searchResults;
     [self.myselfButton setHidden:FALSE];
     [self.personButton setHidden:FALSE];
     [self.resetButton setHidden:TRUE];
+    [self.cityName setHidden:TRUE];
+    [self.locationButton setHidden:FALSE];
+
     myself = FALSE;
+    self.personSelected = FALSE;
+    self.citySelected = FALSE;
+    self.cityName.text = @"";
+    self.contactName.text = @"";
 }
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
@@ -231,6 +242,7 @@ NSArray *searchResults;
 -(IBAction)setMyself:(id)sender
 {
     myself = TRUE;
+    self.personSelected = TRUE;
     
     [self.contactName setText: @"Myself"];
     [self.contactName setHidden:FALSE];
@@ -241,6 +253,81 @@ NSArray *searchResults;
     
 }
 
+-(void)getCities
+{
+    [self.citiesArray removeAllObjects];
+    
+    const char *dbPath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbPath, &database) == SQLITE_OK)
+    {
+        
+        char *error;
+        NSString *querySQL;
+        
+            querySQL = [NSString stringWithFormat:@"select distinct city from mappings"];
+        
+        const char *select_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(database,
+                               select_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                const char* city = (const char*)sqlite3_column_text(statement, 0);
+                NSString *cityString = city == NULL ? nil : [[NSString alloc] initWithUTF8String:city];
+                
+                if (cityString &&  ![cityString isEqualToString:@"(null)"]) {
+                    NSLog(@"adding city: %@", cityString);
+                    [self.citiesArray addObject:cityString];
+                }
+                
+                NSLog(@"no. of cities: %d", self.citiesArray.count);
+                
+            }
+            
+        }
+        else
+        {
+            NSLog(@"some issue with prepared statement");
+        }
+        
+        sqlite3_reset(statement);
+        
+    }
+    
+    sqlite3_close(database);
+    
+}
+
+-(NSMutableString *)getQuery: (NSMutableArray *)personids
+{
+    NSMutableString *query;
+    
+    if (personids.count == 1)
+    {
+        query = [NSMutableString stringWithFormat:@"select img_url from mappings where personid=\'%@\'",[personids objectAtIndex:0]] ;
+    }
+    else
+    {
+        query = [NSMutableString stringWithFormat:@"select img_url from mappings where personid=\'%@\' and IMG_URL in ",[personids objectAtIndex:0]] ;
+        
+        for (int i =1; i<personids.count -1 ; i++) {
+            [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where personid=\'%@\' and IMG_URL in ",[personids objectAtIndex:i]]];
+        }
+        
+        [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where personid=\'%@\' group by img_url ",[personids objectAtIndex:personids.count-1]]];
+        
+        for (int i =1; i<personids.count ; i++) {
+            [query appendFormat:@")"];
+        }
+        
+    }
+    NSLog(@"dynamic query is: %@", query);
+
+    return query;
+}
 
 -(BOOL)getPhotos
 {
@@ -259,18 +346,28 @@ NSArray *searchResults;
     
     if (sqlite3_open(dbPath, &database) == SQLITE_OK)
     {
+        /*
+         select * from mappings where personid="2" and IMG_URL in (select img_url from mappings  where   personid= "5" and img_url in (select IMG_URL from mappings where personid ="99999" group by IMG_URL) ) 
+         */
         
         char *error;
         NSString *querySQL;
-        if (self.citySelected)
+        if (self.citySelected && self.personSelected)
         {
+            NSLog(@"City AND Person");
             querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\' and city = \'%@\'", self.personID, self.city];
+        }
+        else if(self.personSelected)
+        {
+            NSLog(@"ONLY Person");
+            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
         }
         else
         {
-            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
+            NSLog(@"ONLY City");
+
+            querySQL = [NSString stringWithFormat:@"select img_url from mappings where city = \'%@\'", self.city];
         }
-        
         const char *select_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database,
@@ -395,6 +492,11 @@ NSArray *searchResults;
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
  
+    if (!self.citySelected && !self.personSelected && !myself) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@",,|,," message:@"Please select a Person or a City" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        return NO;
+    }
     return [self getPhotos];
 }
 
@@ -442,6 +544,21 @@ NSArray *searchResults;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        self.cityName.text = selectedCell.textLabel.text;
+        NSLog(@"did select row no. %d with title: %@", indexPath.row, self.cityName.text);
+        [self.cityName setHidden:FALSE];
+        [self.locationButton setHidden:TRUE];
+        [self.resetButton setHidden:FALSE];
+        self.citySelected = TRUE;
+        [self.searchDisplayController setActive:NO animated:YES];
+    }
+}
+
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate
@@ -464,9 +581,12 @@ shouldReloadTableForSearchString:(NSString *)searchString
 
 -(IBAction)showSearchDisplayController:(id)sender
 {
+    [self getCities];
+    NSLog(@"show serach bar method");
+    self.searchDisplayController.searchBar.scopeButtonTitles = nil;
+    [self.searchDisplayController.searchBar setShowsScopeBar:NO];
     [self.searchDisplayController setActive:YES animated:YES];
     [self.searchDisplayController.searchBar setHidden:FALSE];
-    [self.searchDisplayController.searchBar setShowsScopeBar:FALSE];
     
 }
 
