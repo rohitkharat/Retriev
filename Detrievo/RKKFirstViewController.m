@@ -47,8 +47,8 @@ NSArray *searchResults;
     
     self.citiesArray = [[NSMutableArray alloc]init];
     
-    NSArray *personids = [NSArray arrayWithObjects:@"2", nil];
-    [self getQuery: [NSMutableArray arrayWithArray:personids]];
+    NSArray *personids = [NSArray arrayWithObjects:@"2",@"5",@"99999", nil];
+    [self getQueryForPersons:[NSMutableArray arrayWithArray:personids] andCity:@"San Francisco"];
 }
 
 -(BOOL)createDB{
@@ -301,23 +301,30 @@ NSArray *searchResults;
     
 }
 
--(NSMutableString *)getQuery: (NSMutableArray *)personids
+-(NSMutableString *)getQueryForPersons: (NSMutableArray *)personids andCity: (NSString *)city;
 {
     NSMutableString *query;
+    NSMutableString *cityQuery = @"";
+    
+    if (city.length != 0 && ![city isEqualToString:@"(null)"])
+    {
+        cityQuery = [NSMutableString stringWithFormat:@" city = '%@' and ", city];
+
+    }
     
     if (personids.count == 1)
     {
-        query = [NSMutableString stringWithFormat:@"select img_url from mappings where personid=\'%@\'",[personids objectAtIndex:0]] ;
+        query = [NSMutableString stringWithFormat:@"select img_url from mappings where %@ personid=\'%@\'",cityQuery,[personids objectAtIndex:0]] ;
     }
     else
     {
-        query = [NSMutableString stringWithFormat:@"select img_url from mappings where personid=\'%@\' and IMG_URL in ",[personids objectAtIndex:0]] ;
+        query = [NSMutableString stringWithFormat:@"select img_url from mappings where %@ personid=\'%@\' and IMG_URL in ",cityQuery, [personids objectAtIndex:0]] ;
         
         for (int i =1; i<personids.count -1 ; i++) {
-            [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where personid=\'%@\' and IMG_URL in ",[personids objectAtIndex:i]]];
+            [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where %@ personid=\'%@\' and IMG_URL in ",cityQuery,[personids objectAtIndex:i]]];
         }
         
-        [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where personid=\'%@\' group by img_url ",[personids objectAtIndex:personids.count-1]]];
+        [query appendFormat:[NSString stringWithFormat:@"(select img_url from mappings where %@ personid=\'%@\' group by img_url ",cityQuery, [personids objectAtIndex:personids.count-1]]];
         
         for (int i =1; i<personids.count ; i++) {
             [query appendFormat:@")"];

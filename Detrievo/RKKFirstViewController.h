@@ -39,6 +39,8 @@
 -(IBAction)reset:(id)sender;
 -(IBAction)setMyself:(id)sender;
 
+-(NSMutableString *)getQueryForPersons: (NSMutableArray *)personids andCity: (NSString *)city;
+
 @property (nonatomic, retain) NSArray *persons;
 @property (nonatomic) ABRecordID personID;
 @property (nonatomic, retain) NSMutableArray *imageURLs;
@@ -48,18 +50,22 @@
 
 @property (nonatomic) BOOL citySelected;
 @property (nonatomic) BOOL datesSelected;
+@property (nonatomic) BOOL personSelected;
 
 @property (nonatomic, retain) NSString *city;
 //@property (nonatomic, retain) NSDate *startDate;
 //@property (nonatomic, retain) NSDate *endDate;
 
 @property (nonatomic, retain) IBOutlet UILabel *contactName;
+@property (nonatomic, retain) IBOutlet UILabel *cityName;
 @property (nonatomic, retain) IBOutlet UIButton *myselfButton;
 @property (nonatomic, retain) IBOutlet UIButton *personButton;
+@property (nonatomic, retain) IBOutlet UIButton *locationButton;
 @property (nonatomic, retain) IBOutlet UIButton *resetButton;
 
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *citiesArray;
 @property (nonatomic, strong) IBOutlet UITableView *searchResults;
+
 
 @end
