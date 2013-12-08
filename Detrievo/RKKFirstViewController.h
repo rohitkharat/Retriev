@@ -67,5 +67,8 @@
 @property (nonatomic, strong) NSMutableArray *citiesArray;
 @property (nonatomic, strong) IBOutlet UITableView *searchResults;
 
+@property (nonatomic, retain) NSMutableString *namesToBeDisplayed;
+@property (nonatomic, retain) NSMutableArray *personIds;
+@property (nonatomic, retain) IBOutlet UIButton *addButton;
 
 @end

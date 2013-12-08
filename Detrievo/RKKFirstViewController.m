@@ -46,9 +46,13 @@ NSArray *searchResults;
     self.personSelected = FALSE;
     
     self.citiesArray = [[NSMutableArray alloc]init];
+    self.namesToBeDisplayed = [[NSMutableString alloc]initWithString:@""];
+    self.city = @"";
+    self.personIds = [[NSMutableArray alloc]init];
+    self.contactName.lineBreakMode = NSLineBreakByWordWrapping;
     
-    NSArray *personids = [NSArray arrayWithObjects:@"2",@"5",@"99999", nil];
-    [self getQueryForPersons:[NSMutableArray arrayWithArray:personids] andCity:@"San Francisco"];
+   // NSArray *personids = [NSArray arrayWithObjects:@"2",@"5",@"99999", nil];
+   // [self getQueryForPersons:[NSMutableArray arrayWithArray:personids] andCity:@"San Francisco"];
 }
 
 -(BOOL)createDB{
@@ -183,19 +187,41 @@ NSArray *searchResults;
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
+    [self.addButton setHidden:TRUE];
+    
     NSString *firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString *lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
     
     self.personID = ABRecordGetRecordID(person);
     
+    NSInteger recordID  =  ABRecordGetRecordID(person);
+    [self.personIds addObject:[NSString stringWithFormat:@"%d", recordID]];
+    
     NSLog(@"Name and ID: %@ %@ %d", firstName, lastName, self.personID);
+    
+    if (self.namesToBeDisplayed.length != 0) {
+        [self.namesToBeDisplayed appendString:@"\nand \n"];
+    }
+    if (firstName.length!=0) {
+        [self.namesToBeDisplayed appendFormat:@"%@ ", firstName];
+    }
+    if (lastName.length!=0) {
+        [self.namesToBeDisplayed appendFormat:@"%@ ", lastName ];
+    }
+    
     [self dismissViewControllerAnimated:picker completion:nil];
-    [self.contactName setText: [NSString stringWithFormat:@"%@ %@", firstName, lastName]];
+   
+    [self.contactName setText: self.namesToBeDisplayed];
+    [self.contactName sizeToFit];
     [self.contactName setHidden:FALSE];
     [self.myselfButton setHidden:TRUE];
     [self.personButton setHidden:TRUE];
     [self.resetButton setHidden:FALSE];
     self.personSelected = TRUE;
+    
+    if (self.personIds.count<4) {
+        [self.addButton setHidden:FALSE];
+    }
     //[self getPhotos];
 
   //  [firstName stringByAppendingString:(lastName)]
@@ -215,7 +241,11 @@ NSArray *searchResults;
     self.personSelected = FALSE;
     self.citySelected = FALSE;
     self.cityName.text = @"";
+    self.city = @"";
     self.contactName.text = @"";
+    [self.addButton setHidden:TRUE];
+    [self.personIds removeAllObjects];
+    self.namesToBeDisplayed = [[NSMutableString alloc]initWithString:@""];
 }
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
@@ -244,11 +274,17 @@ NSArray *searchResults;
     myself = TRUE;
     self.personSelected = TRUE;
     
-    [self.contactName setText: @"Myself"];
+    [self.namesToBeDisplayed appendString:@"Myself"];
+    [self.contactName setText: self.namesToBeDisplayed];
+    //[self.contactName sizeToFit];
+
     [self.contactName setHidden:FALSE];
     [self.myselfButton setHidden:TRUE];
     [self.personButton setHidden:TRUE];
     [self.resetButton setHidden:FALSE];
+    [self.addButton setHidden:FALSE];
+    
+    [self.personIds addObject:@"99999"];
 
     
 }
@@ -358,23 +394,24 @@ NSArray *searchResults;
          */
         
         char *error;
-        NSString *querySQL;
-        if (self.citySelected && self.personSelected)
-        {
-            NSLog(@"City AND Person");
-            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\' and city = \'%@\'", self.personID, self.city];
-        }
-        else if(self.personSelected)
-        {
-            NSLog(@"ONLY Person");
-            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
-        }
-        else
-        {
-            NSLog(@"ONLY City");
-
-            querySQL = [NSString stringWithFormat:@"select img_url from mappings where city = \'%@\'", self.city];
-        }
+        NSString *querySQL = [self getQueryForPersons:self.personIds andCity:self.city];
+        
+//        if (self.citySelected && self.personSelected)
+//        {
+//            NSLog(@"City AND Person");
+//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\' and city = \'%@\'", self.personID, self.city];
+//        }
+//        else if(self.personSelected)
+//        {
+//            NSLog(@"ONLY Person");
+//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
+//        }
+//        else
+//        {
+//            NSLog(@"ONLY City");
+//
+//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where city = \'%@\'", self.city];
+//        }
         const char *select_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database,
@@ -396,7 +433,7 @@ NSArray *searchResults;
             }
             
             if (!imagesFound) {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"No photos found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"No photos found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
             
@@ -557,6 +594,7 @@ NSArray *searchResults;
     {
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         self.cityName.text = selectedCell.textLabel.text;
+        self.city = selectedCell.textLabel.text;
         NSLog(@"did select row no. %d with title: %@", indexPath.row, self.cityName.text);
         [self.cityName setHidden:FALSE];
         [self.locationButton setHidden:TRUE];
