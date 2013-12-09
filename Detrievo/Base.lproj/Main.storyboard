@@ -320,7 +320,7 @@
         <scene sceneID="f5b-DH-puN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vQD-jK-wfh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="camera.png" id="e7N-BE-afU">
+                    <tabBarItem key="tabBarItem" enabled="NO" title="" image="camera.png" id="e7N-BE-afU">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
