@@ -240,8 +240,8 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         else
         {
         
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tag Photo" message:@"Do you want to tag this person?" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
-            [alert show];
+            tagAlert = [[UIAlertView alloc] initWithTitle:@"Tag Photo" message:@"Do you want to tag this person?" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            [tagAlert show];
         }
     }
 }
@@ -249,12 +249,22 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 {
-    NSLog(@"button clicked in alert");
-    if (buttonIndex == 0) {
-        //present contact list for tagging the person
-        NSLog(@"OK button clicked");
-        [self displayContacts];
+    if (alertView == tagAlert) {
+        if (buttonIndex == 0) {
+            //present contact list for tagging the person
+            NSLog(@"OK button clicked");
+            [self displayContacts];
+            
+        }
         
+    }
+    if (alertView == untagAlert) {
+        if (buttonIndex == 0) {
+            NSLog(@"OK button clicked");
+            [self untagPhoto];
+            
+        }
+
     }
 }
 
@@ -541,6 +551,56 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         [alert show];
   //  });
 }
+
+-(IBAction)untagConfirm:(id)sender
+{
+    untagAlert =  [[UIAlertView alloc] initWithTitle:@"Confirm"
+                                                     message:@"Do you want to untag this photo?"
+                                                    delegate:self
+                                           cancelButtonTitle:@"Yes"
+                                           otherButtonTitles:@"Cancel",nil];;
+    [untagAlert show];
+
+}
+
+
+-(void)untagPhoto
+{
+    NSLog(@"untag photo clicked");
+    const char *dbPath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbPath, &database) == SQLITE_OK)
+    {
+        NSLog(@"deleting this image: %@", self.imgURLString);
+        
+        NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM MAPPINGS WHERE IMG_URL = '%@'", self.imgURLString];
+        const char *delete_stmt = [deleteQuery UTF8String];
+        char *error;
+        sqlite3_stmt *compiledStatement;
+        
+        if(sqlite3_prepare_v2(database, delete_stmt, -1, &compiledStatement, NULL) == SQLITE_OK) {
+            // Loop through the results and add them to the feeds array
+            while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
+                // Read the data from the result row
+                NSLog(@"result is here");
+            }
+            
+            // Release the compiled statement from memory
+            sqlite3_finalize(compiledStatement);
+            
+        }
+        int numberOfEffectedRow = sqlite3_changes(database);
+        //return numberOfEffectedRow; // get number of effected rows
+        NSLog(@"no. of rows affected = %d", numberOfEffectedRow);
+        
+        sqlite3_reset(statement);
+        
+    }
+    
+    sqlite3_close(database);
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {

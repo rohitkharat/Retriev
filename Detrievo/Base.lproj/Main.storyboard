@@ -265,6 +265,17 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="geW-5C-aCm">
+                                <rect key="frame" x="0.0" y="430" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Untag This Photo" width="310" id="q8B-cp-DeP">
+                                        <connections>
+                                            <action selector="untagConfirm:" destination="QUy-BD-bpt" id="Mqm-SF-1jg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

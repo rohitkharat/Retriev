@@ -17,6 +17,8 @@
     ABPeoplePickerNavigationController *picker ;
     NSString *databasePath;
     BOOL taggedMyself;
+    UIAlertView *tagAlert;
+    UIAlertView *untagAlert;
 
 }
 
@@ -26,6 +28,8 @@
 -(IBAction)showPhotoLibrary:(id)sender;
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
+
+-(IBAction)untagConfirm:(id)sender;
 
 @property (nonatomic, retain)  UIImagePickerController *imagePicker;
 @property (nonatomic, retain)  IBOutlet UIImageView *imageView;
