@@ -7,16 +7,17 @@
 //
 
 #import "RKKPhotoCollectionViewController.h"
-#import "RKKRetrievedPhoto.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Social/Social.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 
 @interface RKKPhotoCollectionViewController ()
 
 {
     NSMutableArray *selectedRets;
-
+    NSMutableArray *collageSelect;
 }
 
 @end
@@ -45,15 +46,16 @@
     
     self.collView.allowsMultipleSelection = YES;
     
-    selectedRets = [NSMutableArray array];
-    //self.photosArray = [[NSMutableArray alloc]init];
-
+    //selectedRets = [NSMutableArray array];
+    self.photosArray = [[NSMutableArray alloc]init];
+    selectedRets = [[NSMutableArray alloc] init];
+    collageSelect = [[NSMutableArray alloc] init ];
     
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.photosArray.count;
+    return self.photoURLArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -64,16 +66,46 @@
     
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
     
-    imageView.image = [self.photosArray objectAtIndex:indexPath.row];
+    //code to get image from url
+    NSURL *imageURL = [NSURL URLWithString:[self.photoURLArray objectAtIndex:indexPath.row]];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
+     {
+         UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
+         
+         imageView.image = copyOfOriginalImage;
+         [self.photosArray addObject:copyOfOriginalImage];
+     }
+            failureBlock:^(NSError *error)
+     {
+         // error handling
+         NSLog(@"failure-----");
+     }];
+    
     
     //recipeImageView.image = [UIImage imageNamed:[self.photosArray objectAtIndex:indexPath.row]];
     
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grey.png"]];
-
+    
     
     return cell;
     
 }
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+        
+        reusableview = footerview;
+    }
+    
+    return reusableview;
+}
+
 
 - (IBAction)share:(id)sender {
     
@@ -89,32 +121,63 @@
         }
         
         [self presentViewController:controller animated:YES completion:Nil];
+        
+        // Deselect all selected items
+        for(NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
+            [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        }
+        
+        // Remove all items from selectedRecipes array
+        [selectedRets removeAllObjects];
     }
     // }
-    
-    // Deselect all selected items
-    for(NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
-        [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No photos selected" message:@"Please select the images" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+        [alert show];
     }
     
-    // Remove all items from selectedRecipes array
-    [self.photosArray removeAllObjects];
+}
+
+- (IBAction)collage:(id)sender {
     
+    if ([selectedRets count] < 4) {
+        
+        if ([selectedRets count] > 0){
+            
+            for (NSString *obj in collageSelect){
+                NSLog(@"From ArrayTag obj: %@", obj);
+            }
+            [self createVideo];
+        }
+        
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No photos selected" message:@"Please select the images" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+            [alert show];
+        }
+        
+        
+    }
+    // }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit exceeded" message:@"You can select only 3 photos at a time" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+        [alert show];
+        
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    //   NSLog(@"hi ddude : %d  %d",indexPath.section,indexPath.row);
-    //   NSLog(@" %@",[retImages objectAtIndex:indexPath.row]);
-    
-    // Determine the selected items by using the indexPath
-    
     // NSString *selectedRet = [retImages [indexPath.section] objectAtIndex:indexPath.row];
     UIImage *selectedRet=    [self.photosArray objectAtIndex:indexPath.row];
+    NSURL *imagelink = [self.photoURLArray objectAtIndex:indexPath.row];
     // Add the selected item into the array
     
     [selectedRets addObject:selectedRet];
+    [collageSelect addObject:imagelink];
     NSLog(@"select");
     // NSLog(@"inserted %@ at index %d", selectedRet, indexPath.row);
     //NSLog(@"%@", selectedRets);
@@ -125,8 +188,10 @@
 {
     
     UIImage *deSelectedRet =[self.photosArray objectAtIndex:indexPath.row];
+    NSURL *deimagelink = [self.photoURLArray objectAtIndex:indexPath.row];
     
     [selectedRets removeObject:deSelectedRet];
+    [collageSelect removeObject:deimagelink];
     NSLog(@"deselect");
     //NSLog(@"%@", selectedRets);
 }
@@ -145,6 +210,211 @@
     self.collectionView.allowsMultipleSelection = TRUE;
     
 }
+
+-(void)createVideo
+{
+    NSLog(@"create VIDEO!");
+    
+    NSError *error = nil;
+    NSDate *currentTime = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh-mm"];
+    NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    NSLog(@"time: %@",resultString);
+    NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSLog(@"paths array count = %d", paths.count);
+    NSString  *documentsDirectory = [paths objectAtIndex:0];
+    self.filePath = [NSString stringWithFormat:@"%@/%@.mov", documentsDirectory,resultString];
+    NSLog(@"filePath = %@", self.filePath);
+    
+    
+    UIImage *imj = [selectedRets objectAtIndex:0];
+    CGSize frameSize = imj.size;
+    
+    
+    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
+                                  [NSURL fileURLWithPath:self.filePath] fileType:AVFileTypeQuickTimeMovie
+                                                              error:&error];
+    
+    
+    
+    
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   AVVideoCodecH264, AVVideoCodecKey,
+                                   
+                                   [NSNumber numberWithInt:640], AVVideoWidthKey,
+                                   
+                                   [NSNumber numberWithInt:960], AVVideoHeightKey,
+                                   
+                                   nil];
+    
+    AVAssetWriterInput* videoStream = [AVAssetWriterInput
+                                       assetWriterInputWithMediaType:AVMediaTypeVideo
+                                       outputSettings:videoSettings] ;
+    
+    
+    AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor
+                                                     
+                                                     assetWriterInputPixelBufferAdaptorWithAssetWriterInput: videoStream
+                                                     
+                                                     sourcePixelBufferAttributes:nil];
+    NSParameterAssert(videoStream);
+    NSParameterAssert([videoWriter canAddInput:videoStream]);
+    videoStream.expectsMediaDataInRealTime = YES;
+    
+    [videoWriter addInput:videoStream];
+    [videoWriter startWriting];
+    
+    [videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    CVPixelBufferRef buffer = NULL;
+    int frameCount = 0;
+    NSLog(@"no. of images being added to buffer: %d", selectedRets.count);
+    
+    for(UIImage *img in selectedRets)
+    {
+        //without maintaining aspect ratio
+        buffer = [self pixelBufferFromCGImage:[[self imageWithImage:img scaledToSize:CGSizeMake(160, 280)] CGImage] andSize:img.size];
+        
+//      maintain aspect ratio
+//        buffer = [self pixelBufferFromCGImage:[[self imageWithImage:img scaledToWidth:320.0f] CGImage] andSize:img.size];
+
+        //CVPixelBufferRef buffer = [self pixelBufferFromCGImage:img.CGImage];
+        
+        BOOL append_ok = NO;
+        
+        while (!append_ok){
+            if (adaptor.assetWriterInput.readyForMoreMediaData){
+                CMTime frameTime = CMTimeMake(frameCount,(int32_t) 1);
+                append_ok = [adaptor appendPixelBuffer:buffer withPresentationTime:frameTime];
+                if(buffer)
+                    [NSThread sleepForTimeInterval:0.5];
+            }else{
+                [NSThread sleepForTimeInterval:1];
+            }
+        }
+        frameCount++;
+    }
+    
+    [videoStream markAsFinished];
+    [videoWriter finishWriting];
+    
+    //this is not being called for some reason so check why
+    //[self saveMovieToCameraRoll];
+    
+    // [self CompileFilesToMakeMovie];
+    
+    NSString *openCommand = [NSString stringWithFormat:@"/usr/bin/open \"%@\"", NSTemporaryDirectory()];
+    system([openCommand fileSystemRepresentation]);
+    
+    
+    UISaveVideoAtPathToSavedPhotosAlbum (self.filePath,self, @selector(video:didFinishSavingWithError: contextInfo:), nil);
+    
+    
+    
+}
+
+- (void)video:(NSString *) videoPath didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
+    NSLog(@"Finished saving video with error: %@", error);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Done"
+                                                   message:@"Movie succesfully exported."
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image andSize:(CGSize) size
+{
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,nil];
+    CVPixelBufferRef pxbuffer = NULL;
+    
+    //    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, 640,
+    //                                          960, kCVPixelFormatType_32ARGB, (__bridge CFDictionaryRef) options,&pxbuffer);
+    
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault,
+                                          self.view.frame.size.width,
+                                          self.view.frame.size.height,
+                                          kCVPixelFormatType_32ARGB,
+                                          (__bridge CFDictionaryRef) options,
+                                          &pxbuffer);
+    
+    
+    NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    NSParameterAssert(pxdata != NULL);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    //    CGContextRef context = CGBitmapContextCreate(pxdata, 640,
+    //                                                 960, 8, 4*640, rgbColorSpace,
+    //                                                 kCGImageAlphaNoneSkipFirst);
+    CGContextRef context = CGBitmapContextCreate(pxdata, self.view.frame.size.width,
+                                                 self.view.frame.size.height, 8, 4*self.view.frame.size.width, rgbColorSpace,
+                                                 kCGImageAlphaNoneSkipFirst);
+    
+    
+    NSParameterAssert(context);
+    CGContextConcatCTM(context, CGAffineTransformMakeRotation(0));
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image),
+                                           CGImageGetHeight(image)), image);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    return pxbuffer;
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width
+{
+    float oldWidth = sourceImage.size.width;
+    float scaleFactor = i_width / oldWidth;
+    
+    float newHeight = sourceImage.size.height * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+//code to save to photo library of the iPhone
+//- (void)saveMovieToCameraRoll
+//{
+//    NSLog(@"saveMovieToCameraRoll");
+//    // save the movie to the camera roll
+//	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//	//NSLog(@"writing \"%@\" to photos album", outputURL);
+//	[library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:self.filePath]
+//								completionBlock:^(NSURL *assetURL, NSError *error) {
+//									if (error) {
+//										NSLog(@"assets library failed (%@)", error);
+//									}
+//									else {
+//										[[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.filePath] error:&error];
+//										if (error)
+//											NSLog(@"Couldn't remove temporary movie file \"%@\"", self.filePath);
+//									}
+//									self.filePath = nil;
+//								}];
+//}
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

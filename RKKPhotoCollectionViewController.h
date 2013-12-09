@@ -21,10 +21,17 @@
 
 @property(weak, nonatomic) IBOutlet UICollectionView *collView;
 
+@property (nonatomic, retain) NSString *filePath;
+
+
 - (IBAction)collageMaking:(id)sender;
 - (IBAction)share:(id)sender;
 
 
 -(IBAction)selectPhotos:(id)sender;
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
+-(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
+
+
 
 @end

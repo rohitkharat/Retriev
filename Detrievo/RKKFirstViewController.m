@@ -544,7 +544,7 @@ NSArray *searchResults;
         
         RKKPhotoCollectionViewController *photoCollectionViewController = [segue destinationViewController];
         
-        photoCollectionViewController.photosArray = self.images;
+        photoCollectionViewController.photoURLArray = self.imageURLs;
         
     }
 }
