@@ -348,11 +348,17 @@ NSArray *searchResults;
 
     }
     
+    if (personids.count == 0)
+    {
+        query = [NSMutableString stringWithFormat:@"select distinct img_url from mappings where city = '%@'", city];
+    }
+
+    
     if (personids.count == 1)
     {
         query = [NSMutableString stringWithFormat:@"select img_url from mappings where %@ personid=\'%@\'",cityQuery,[personids objectAtIndex:0]] ;
     }
-    else
+    else if (personids.count > 1)
     {
         query = [NSMutableString stringWithFormat:@"select img_url from mappings where %@ personid=\'%@\' and IMG_URL in ",cityQuery, [personids objectAtIndex:0]] ;
         
@@ -396,22 +402,6 @@ NSArray *searchResults;
         char *error;
         NSString *querySQL = [self getQueryForPersons:self.personIds andCity:self.city];
         
-//        if (self.citySelected && self.personSelected)
-//        {
-//            NSLog(@"City AND Person");
-//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\' and city = \'%@\'", self.personID, self.city];
-//        }
-//        else if(self.personSelected)
-//        {
-//            NSLog(@"ONLY Person");
-//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where personid = \'%d\'", self.personID];
-//        }
-//        else
-//        {
-//            NSLog(@"ONLY City");
-//
-//            querySQL = [NSString stringWithFormat:@"select img_url from mappings where city = \'%@\'", self.city];
-//        }
         const char *select_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database,

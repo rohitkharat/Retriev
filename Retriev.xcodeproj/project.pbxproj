@@ -22,6 +22,8 @@
 		714341A41844517A00C179AD /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 714341A11844517A00C179AD /* photo-frame.png */; };
 		714341A71845823B00C179AD /* RKKRetrievedPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 714341A61845823B00C179AD /* RKKRetrievedPhoto.m */; };
 		714341A9184582E000C179AD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714341A8184582E000C179AD /* CoreLocation.framework */; };
+		71C58E621855A68A00AFC8D6 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 71C58E611855A68A00AFC8D6 /* white.png */; };
+		71C58E641855A6F900AFC8D6 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 71C58E631855A6F900AFC8D6 /* grey.png */; };
 		9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2451837641900E0F77D /* RKKCameraViewController.m */; };
 		9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2481837657200E0F77D /* RKKTabViewController.m */; };
 		990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 990F48811838DE5C003CCB90 /* libsqlite3.dylib */; };
@@ -70,6 +72,8 @@
 		714341A51845823B00C179AD /* RKKRetrievedPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKRetrievedPhoto.h; sourceTree = "<group>"; };
 		714341A61845823B00C179AD /* RKKRetrievedPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKRetrievedPhoto.m; sourceTree = "<group>"; };
 		714341A8184582E000C179AD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		71C58E611855A68A00AFC8D6 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
+		71C58E631855A6F900AFC8D6 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
 		9904F2441837641900E0F77D /* RKKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKCameraViewController.h; sourceTree = "<group>"; };
 		9904F2451837641900E0F77D /* RKKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKCameraViewController.m; sourceTree = "<group>"; };
 		9904F2471837657200E0F77D /* RKKTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKTabViewController.h; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 		994A1E05182DC5270065C8A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				71C58E631855A6F900AFC8D6 /* grey.png */,
+				71C58E611855A68A00AFC8D6 /* white.png */,
 				7143419F1844517A00C179AD /* footer_banner.png */,
 				714341A01844517A00C179AD /* header_banner.png */,
 				714341A11844517A00C179AD /* photo-frame.png */,
@@ -312,9 +318,11 @@
 			files = (
 				712269C8184B3E9900C7C815 /* add.png in Resources */,
 				712269CA184B3E9900C7C815 /* share.png in Resources */,
+				71C58E641855A6F900AFC8D6 /* grey.png in Resources */,
 				714341A41844517A00C179AD /* photo-frame.png in Resources */,
 				712269D1184B468C00C7C815 /* multiple_tags.png in Resources */,
 				712269D0184B468C00C7C815 /* tag.png in Resources */,
+				71C58E621855A68A00AFC8D6 /* white.png in Resources */,
 				712269D7184B4B4200C7C815 /* magnify.png in Resources */,
 				714341A31844517A00C179AD /* header_banner.png in Resources */,
 				712269D9184B643300C7C815 /* redo.png in Resources */,
