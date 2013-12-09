@@ -186,7 +186,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RRD-ck-ZsJ">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="RRD-ck-ZsJ">
                                     <rect key="frame" x="132" y="10" width="56" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Collage">
@@ -204,9 +204,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Photos" id="066-e8-h1B">
-                        <barButtonItem key="rightBarButtonItem" title="Select" id="wNP-xR-RMA">
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="wNP-xR-RMA">
                             <connections>
-                                <action selector="selectPhotos:" destination="6Jl-F3-RlJ" id="fEd-L2-8y5"/>
+                                <action selector="share:" destination="6Jl-F3-RlJ" id="C8G-LH-QrL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

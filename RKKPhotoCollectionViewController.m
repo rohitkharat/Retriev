@@ -133,7 +133,7 @@
     // }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No photos selected" message:@"Please select the images" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos Selected" message:@"Please select some photos to be shared" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
         [alert show];
     }
     
@@ -153,7 +153,7 @@
         
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No photos selected" message:@"Please select the images" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos Selected" message:@"Please select some Photos to make a collage" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
             [alert show];
         }
         
@@ -162,7 +162,7 @@
     // }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit exceeded" message:@"You can select only 3 photos at a time" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You can select only 3 photos" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
         [alert show];
         
     }
@@ -315,7 +315,9 @@
 }
 
 - (void)video:(NSString *) videoPath didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
-    NSLog(@"Finished saving video with error: %@", error);
+    if (error) {
+        NSLog(@"Finished saving video with error: %@", error);
+    }
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Done"
                                                    message:@"Movie succesfully exported."
                                                   delegate:nil
