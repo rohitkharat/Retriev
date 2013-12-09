@@ -25,7 +25,7 @@
 
 -(IBAction)showPhotoLibrary:(id)sender;
 
-
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @property (nonatomic, retain)  UIImagePickerController *imagePicker;
 @property (nonatomic, retain)  IBOutlet UIImageView *imageView;

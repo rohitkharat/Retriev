@@ -12,8 +12,14 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define kSanFranciscoCoordinate CLLocationCoordinate2DMake(37.776278, -122.419367)
+
+
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
+//float scale_width = 0.0;
+//float scale_height = 0.0;
+
 
 @interface RKKSecondViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
 
@@ -114,38 +120,53 @@ static sqlite3_stmt *statement = nil;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
+    
     taggedMyself = FALSE;
     
     UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
-  //  [self.imageView setFrame:CGRectMake(0, 0, selectedImage.size.width, selectedImage.size.height)];
-
+    self.originalImage = [self imageWithImage:selectedImage scaledToSize:CGSizeMake(300, 280)];
+    
+    NSLog(@"self.originalImage scaled down to size = %f X %f", self.originalImage.size.width, self.originalImage.size.height);
+    
     self.imgURLString = [info objectForKey:UIImagePickerControllerReferenceURL];
     self.imgURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     //print file name
     NSLog(@"image url is %@", self.imgURLString);
     
-    self.imageView = [[UIImageView alloc]initWithImage:selectedImage];
-    //self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 230))];
     
-    float scale = self.imageView.frame.size.width/selectedImage.size.width;
-    NSLog(@"scale: %f",scale);
-    
-    //assets-library://asset/asset.JPG?id=79465E8C-53B9-40D6-B11C-07A1856E9093&ext=JPG
-
-    //assets-library://asset/asset.JPG?id=85991B66-F94B-4010-B2BD-6ED516E1C90A&ext=JPG
-    
-    self.imageView.image = selectedImage;
-
-//    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
+    //------------------------
+    self.imageView = [[UIImageView alloc] initWithImage:self.originalImage];
+    self.imageView.frame = CGRectMake(10.0f, 40.0f, self.originalImage.size.width, self.originalImage.size.height);
     
     [self.view addSubview:self.imageView];
+    NSLog(@"self.imageView size = %f X %f", self.imageView.frame.size.width, self.imageView.frame.size.height);
     
-    // Execute the method used to detect faces in background
-    [self performSelectorInBackground:@selector(detectFaces:) withObject:selectedImage];
-      
+    //    self.selectedImage = [[CIImage alloc] initWithImage:self.originalImage] ;
+    self.selectedImage = [CIImage imageWithCGImage:[self imageWithImage:self.originalImage scaledToSize:CGSizeMake(150, 140)].CGImage];
+    NSLog(@"CIImage size = %f X %f", self.selectedImage.extent.size.width, self.selectedImage.extent.size.height);
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy];
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:nil options:options];
+    
+    //NSArray *features = [detector featuresInImage:self.selectedImage];
+    self.facesArray = [[NSMutableArray alloc]init];
+    self.facesArray = [NSMutableArray arrayWithArray:[detector featuresInImage:self.selectedImage]];
+    
+    [self performSelectorInBackground:@selector(detectFaces:) withObject:self.facesArray];
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -154,34 +175,33 @@ static sqlite3_stmt *statement = nil;
     
 }
 
--(void)detectFaces: (UIImage *)facePhoto
+-(void)detectFaces: (NSMutableArray *)features
 {
-    self.originalImage = facePhoto;
-    self.selectedImage = [CIImage imageWithCGImage:facePhoto.CGImage];
+    //Container for the face attributes
+    UIView* faceContainer = [[UIView alloc] initWithFrame:self.imageView.frame];
     
-    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:nil options:[NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy]];
-    
-    self.facesArray = [NSMutableArray arrayWithArray:[detector featuresInImage:self.selectedImage]];
+    // flip faceContainer on y-axis to match coordinate system used by core image
+    [faceContainer setTransform:CGAffineTransformMakeScale(1, -1)];
     
     NSLog(@"number of faces: %d", self.facesArray.count);
-    NSLog(@"faces array %@", self.facesArray);
-    for (CIFaceFeature *faceFeature in self.facesArray) {
+
+    for (CIFaceFeature *faceFeature in self.facesArray)
+    {
+        // get the width of the face
+        CGFloat faceWidth = faceFeature.bounds.size.width;
         
-        CGRect modifiedFaceBounds = faceFeature.bounds;
+        // create a UIView using the bounds of the face
+        UIView* faceView = [[UIView alloc] initWithFrame:faceFeature.bounds];
         
-        //store each modifiedFaceBound inside a global array here which will be accessed in touches began method below
-        
-        modifiedFaceBounds.origin.y = facePhoto.size.height-faceFeature.bounds.size.height-faceFeature.bounds.origin.y;
- 
-        //  modifiedFaceBounds.origin.x = facePhoto.size.width-faceFeature.bounds.size.width-faceFeature.bounds.origin.x;
-        
-        UIView *faceView = [[UIView alloc]initWithFrame:modifiedFaceBounds];
-        
+        // add a border around the newly created UIView
         faceView.layer.borderWidth = 1;
-        faceView.layer.borderColor = [[UIColor blueColor] CGColor];
+        faceView.layer.borderColor = [[UIColor orangeColor] CGColor];
         
-        [self.imageView addSubview:faceView];
+        // add the new view to create a box around the face
+        [faceContainer addSubview:faceView];
     }
+    
+    [self.view addSubview:faceContainer];
 
 }
 
@@ -198,7 +218,8 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 {
     CGRect faceBounds = faceFeature.bounds;
     
-    faceBounds.origin.y = self.originalImage.size.height-faceFeature.bounds.size.height-faceFeature.bounds.origin.y;
+    faceBounds.origin.y = self.originalImage.size.height-faceFeature.bounds.size.height-faceFeature.bounds.origin.y + 40.0f;
+    faceBounds.origin.x += 10.0f;
 
     
     if (CGRectContainsPoint(faceBounds, touchPoint))
@@ -209,9 +230,9 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             //Ask user whether he wants to tag himself or another person
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Who do you want to Tag?"
                                                                      delegate:self
-                                                            cancelButtonTitle:@"Another Person"
+                                                            cancelButtonTitle:@"Cancel"
                                                        destructiveButtonTitle:@"Myself"
-                                                            otherButtonTitles:nil];
+                                                            otherButtonTitles:@"Another Person",nil];
             
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
             [actionSheet showInView:self.view];
@@ -245,12 +266,13 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         [self tagPerson:99999];
 
     }
-    else
+    else if (buttonIndex == actionSheet.cancelButtonIndex)
     {
-        [self displayContacts];
+        NSLog(@"cancel button");
         
     }
-}
+    else [self displayContacts];
+    }
 
 -(void)displayContacts
 {
@@ -361,6 +383,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 -(void)tagPerson: (ABRecordID)recordID
 {
 
+    [self getPhotoLocation];
     const char *dbPath = [databasePath UTF8String];
     
     if (sqlite3_open(dbPath, &database) == SQLITE_OK)
@@ -405,10 +428,10 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             
             else
             {
-               // NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL, CITY) VALUES (\"%d\",\"%@\" ,\"%@\")", recordID, self.imgURLString, [self getPhotoLocation]];
+                NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL, CITY) VALUES (\"%d\",\"%@\" ,\"%@\")", recordID, self.imgURLString, self.city];
                 
                 //without city
-                 NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\")", recordID, self.imgURL];
+               //  NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\")", recordID, self.imgURL];
                 
                 insert_stmt = [insertMappingSQL UTF8String];
                 
@@ -441,29 +464,30 @@ for (CIFaceFeature *faceFeature in self.facesArray)
     NSLog(@"getting photo with url: %@", self.imgURL);
    // NSURL *imageURL = [NSURL URLWithString:self.imgURLString];
     
-    //getting exception here!!
-    //remove exception
-    //remove unwanted code from other first view controller like use of RKKRetrievedPhoto Object
-    //make sure city is getting inserted
-    //work on city search display controller
-    //check if code takes both search criteria if city and name is selected
-    
     NSLog(@"got URL");
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.imgURL resultBlock:^(ALAsset *asset)
      {
+
+//                  CLLocationCoordinate2D coord = kSanFranciscoCoordinate;
+//                  CLLocation *location = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+
          CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
-         NSLog(@"got location");
+         NSLog(@"got location %f, %f", location.coordinate.latitude, location.coordinate.longitude);
          CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+         
+
+         
          [geocoder reverseGeocodeLocation:location
                         completionHandler:^(NSArray *placemarks, NSError *error) {
                             NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
                             
-                            if (error){
-                                NSLog(@"Geocode failed with error: %@", error);
-                                return;
-                                
-                            }
+//                            if (error){
+//                                NSLog(@"Geocode failed with error: %@", error);
+//                                [self displayError:error];
+//                                self.city = @"";
+//                                
+//                            }
                             
                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
                             
@@ -490,224 +514,38 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 
 }
 
+// display a given NSError in an UIAlertView
+- (void)displayError:(NSError*)error
+{
+//    dispatch_async(dispatch_get_main_queue(),^ {
+//        [self lockUI:NO];
+    
+        NSString *message;
+        switch ([error code])
+        {
+            case kCLErrorGeocodeFoundNoResult: message = @"kCLErrorGeocodeFoundNoResult";
+                break;
+            case kCLErrorGeocodeCanceled: message = @"kCLErrorGeocodeCanceled";
+                break;
+            case kCLErrorGeocodeFoundPartialResult: message = @"kCLErrorGeocodeFoundNoResult";
+                break;
+            default: message = [error description];
+                break;
+        }
+        
+        UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"An error occurred."
+                                                         message:message
+                                                        delegate:nil
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];;
+        [alert show];
+  //  });
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
-//---------------------------------------------------------------------------------------------------------------------------------
-/*
-
-- (CGPoint) leftEyePositionForImage:(UIImage *)image{
-    return [self pointForImage:image fromPoint:self.leftEyePosition];
-}
-
-- (CGPoint) rightEyePositionForImage:(UIImage *)image{
-    return [self pointForImage:image fromPoint:self.rightEyePosition];
-}
-
-- (CGPoint) mouthPositionForImage:(UIImage *)image{
-    return [self pointForImage:image fromPoint:self.mouthPosition];
-}
-
-- (CGRect) boundsForImage:(UIImage *)image{
-    return [self boundsForImage:image fromBounds:self.bounds];
-}
-
-
-- (CGPoint) normalizedLeftEyePositionForImage:(UIImage *)image{
-    return [self normalizedPointForImage:image fromPoint:self.leftEyePosition];
-}
-
-- (CGPoint) normalizedRightEyePositionForImage:(UIImage *)image{
-    return [self normalizedPointForImage:image fromPoint:self.rightEyePosition];
-}
-
-- (CGPoint) normalizedMouthPositionForImage:(UIImage *)image{
-    return [self normalizedPointForImage:image fromPoint:self.mouthPosition];
-}
-
-- (CGRect) normalizedBoundsForImage:(UIImage *)image{
-    return [self normalizedBoundsForImage:image fromBounds:self.bounds];
-}
-
-
-- (CGPoint) leftEyePositionForImage:(UIImage *)image inView:(CGSize)viewSize{
-    CGPoint normalizedPoint = [self normalizedLeftEyePositionForImage:image];
-    return [self pointInView:viewSize fromNormalizedPoint:normalizedPoint];
-}
-
-- (CGPoint) rightEyePositionForImage:(UIImage *)image inView:(CGSize)viewSize{
-    CGPoint normalizedPoint = [self normalizedRightEyePositionForImage:image];
-    return [self pointInView:viewSize fromNormalizedPoint:normalizedPoint];
-}
-
-- (CGPoint) mouthPositionForImage:(UIImage *)image inView:(CGSize)viewSize{
-    CGPoint normalizedPoint = [self normalizedMouthPositionForImage:image];
-    return [self pointInView:viewSize fromNormalizedPoint:normalizedPoint];
-}
-
-- (CGRect) boundsForImage:(UIImage *)image inView:(CGSize)viewSize{
-    CGRect normalizedBounds = [self normalizedBoundsForImage:image fromBounds:self.bounds];
-    return [self boundsInView:viewSize fromNormalizedBounds:normalizedBounds];
-}
-
-
-- (CGPoint) pointForImage:(UIImage*) image fromPoint:(CGPoint) originalPoint {
-    
-    CGFloat imageWidth = image.size.width;
-    CGFloat imageHeight = image.size.height;
-    
-    CGPoint convertedPoint;
-    
-    switch (image.imageOrientation) {
-        case UIImageOrientationUp:
-            convertedPoint.x = originalPoint.x;
-            convertedPoint.y = imageHeight - originalPoint.y;
-            break;
-        case UIImageOrientationDown:
-            convertedPoint.x = imageWidth - originalPoint.x;
-            convertedPoint.y = originalPoint.y;
-            break;
-        case UIImageOrientationLeft:
-            convertedPoint.x = imageWidth - originalPoint.y;
-            convertedPoint.y = imageHeight - originalPoint.x;
-            break;
-        case UIImageOrientationRight:
-            convertedPoint.x = originalPoint.y;
-            convertedPoint.y = originalPoint.x;
-            break;
-        case UIImageOrientationUpMirrored:
-            convertedPoint.x = imageWidth - originalPoint.x;
-            convertedPoint.y = imageHeight - originalPoint.y;
-            break;
-        case UIImageOrientationDownMirrored:
-            convertedPoint.x = originalPoint.x;
-            convertedPoint.y = originalPoint.y;
-            break;
-        case UIImageOrientationLeftMirrored:
-            convertedPoint.x = imageWidth - originalPoint.y;
-            convertedPoint.y = originalPoint.x;
-            break;
-        case UIImageOrientationRightMirrored:
-            convertedPoint.x = originalPoint.y;
-            convertedPoint.y = imageHeight - originalPoint.x;
-            break;
-        default:
-            break;
-    }
-    return convertedPoint;
-}
-
-- (CGPoint) normalizedPointForImage:(UIImage*) image fromPoint:(CGPoint) originalPoint {
-    
-    CGPoint normalizedPoint = [self pointForImage:image fromPoint:originalPoint];
-    
-    normalizedPoint.x /= image.size.width;
-    normalizedPoint.y /= image.size.height;
-    
-    return normalizedPoint;
-}
-
-- (CGPoint) pointInView:(CGSize) viewSize fromNormalizedPoint:(CGPoint) normalizedPoint{
-    return CGPointMake(normalizedPoint.x * viewSize.width, normalizedPoint.y * viewSize.height);
-}
-
-- (CGSize) sizeForImage:(UIImage *) image fromSize:(CGSize) originalSize{
-    CGSize convertedSize;
-    
-    switch (image.imageOrientation) {
-        case UIImageOrientationUp:
-        case UIImageOrientationDown:
-        case UIImageOrientationUpMirrored:
-        case UIImageOrientationDownMirrored:
-            convertedSize.width = originalSize.width;
-            convertedSize.height = originalSize.height;
-            break;
-        case UIImageOrientationLeft:
-        case UIImageOrientationRight:
-        case UIImageOrientationLeftMirrored:
-        case UIImageOrientationRightMirrored:
-            convertedSize.width = originalSize.height;
-            convertedSize.height = originalSize.width;
-            break;
-        default:
-            break;
-    }
-    return convertedSize;
-}
-
-- (CGSize) normalizedSizeForImage:(UIImage *) image fromSize:(CGSize) originalSize{
-    CGSize normalizedSize = [self sizeForImage:image fromSize:originalSize];
-    normalizedSize.width /= image.size.width;
-    normalizedSize.height /= image.size.height;
-    
-    return normalizedSize;
-}
-
-- (CGSize) sizeInView:(CGSize) viewSize fromNormalizedSize:(CGSize) normalizedSize{
-    return CGSizeMake(normalizedSize.width * viewSize.width, normalizedSize.height * viewSize.height);
-}
-
-- (CGRect) boundsForImage:(UIImage *) image fromBounds:(CGRect) originalBounds{
-    
-    CGPoint convertedOrigin = [self pointForImage:image fromPoint:originalBounds.origin];;
-    CGSize convertedSize = [self sizeForImage:image fromSize:originalBounds.size];
-    
-    switch (image.imageOrientation) {
-        case UIImageOrientationUp:
-            convertedOrigin.y -= convertedSize.height;
-            break;
-        case UIImageOrientationDown:
-            convertedOrigin.x -= convertedSize.width;
-            break;
-        case UIImageOrientationLeft:
-            convertedOrigin.x -= convertedSize.width;
-            convertedOrigin.y -= convertedSize.height;
-        case UIImageOrientationRight:
-            break;
-        case UIImageOrientationUpMirrored:
-            convertedOrigin.y -= convertedSize.height;
-            convertedOrigin.x -= convertedSize.width;
-            break;
-        case UIImageOrientationDownMirrored:
-            break;
-        case UIImageOrientationLeftMirrored:
-            convertedOrigin.x -= convertedSize.width;
-            convertedOrigin.y += convertedSize.height;
-        case UIImageOrientationRightMirrored:
-            convertedOrigin.y -= convertedSize.height;
-            break;
-        default:
-            break;
-    }
-    
-    return CGRectMake(convertedOrigin.x, convertedOrigin.y,
-                      convertedSize.width, convertedSize.height);
-}
-
-- (CGRect) normalizedBoundsForImage:(UIImage *) image fromBounds:(CGRect) originalBounds{
-    
-    CGRect normalizedBounds = [self boundsForImage:image fromBounds:originalBounds];
-    normalizedBounds.origin.x /= image.size.width;
-    normalizedBounds.origin.y /= image.size.height;
-    normalizedBounds.size.width /= image.size.width;
-    normalizedBounds.size.height /= image.size.height;
-    
-    return normalizedBounds;
-}
-
-- (CGRect) boundsInView:(CGSize) viewSize fromNormalizedBounds:(CGRect) normalizedBounds{
-    return CGRectMake(normalizedBounds.origin.x * viewSize.width,
-                      normalizedBounds.origin.y * viewSize.height,
-                      normalizedBounds.size.width * viewSize.width,
-                      normalizedBounds.size.height * viewSize.height);
-}
-*/
-
-//---------------------------------------------------------------------------------------------------------------------------------
 
 @end
