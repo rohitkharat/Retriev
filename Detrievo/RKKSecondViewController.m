@@ -56,7 +56,7 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE IF NOT EXISTS PHOTOS (IMG_URL TEXT PRIMARY KEY)";
             
             const char *sql_stmt_3 =
-            "CREATE TABLE IF NOT EXISTS MAPPINGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, PERSONID INTEGER, IMG_URL TEXT) ";
+            "CREATE TABLE IF NOT EXISTS MAPPINGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, PERSONID INTEGER, IMG_URL TEXT, CITY TEXT)";
             
             if (sqlite3_exec(database, sql_stmt, NULL, NULL, &errMsg)
                 != SQLITE_OK)
@@ -79,7 +79,7 @@ static sqlite3_stmt *statement = nil;
                 NSLog(@"Failed to create table MAPPINGS");
             }
             
-
+            
             
             sqlite3_close(database);
             return  isSuccess;
@@ -184,7 +184,7 @@ static sqlite3_stmt *statement = nil;
     [faceContainer setTransform:CGAffineTransformMakeScale(1, -1)];
     
     NSLog(@"number of faces: %d", self.facesArray.count);
-
+    
     for (CIFaceFeature *faceFeature in self.facesArray)
     {
         // get the width of the face
@@ -202,49 +202,49 @@ static sqlite3_stmt *statement = nil;
     }
     
     [self.view addSubview:faceContainer];
-
+    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-   // NSLog(@"touches began");
+    // NSLog(@"touches began");
     
     //get the location of the touch
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.view];
-   
+    
     //check if the touch is within any of the face boxes.... so store the face boxes in an array... iterate over the array n run the below if condition for each face box.
-for (CIFaceFeature *faceFeature in self.facesArray)
-{
-    CGRect faceBounds = faceFeature.bounds;
-    
-    faceBounds.origin.y = self.originalImage.size.height-faceFeature.bounds.size.height-faceFeature.bounds.origin.y + 40.0f;
-    faceBounds.origin.x += 10.0f;
-
-    
-    if (CGRectContainsPoint(faceBounds, touchPoint))
+    for (CIFaceFeature *faceFeature in self.facesArray)
     {
-       // NSLog(@"oh yeah!");
-        if (!taggedMyself)
-        {
-            //Ask user whether he wants to tag himself or another person
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Who do you want to Tag?"
-                                                                     delegate:self
-                                                            cancelButtonTitle:@"Cancel"
-                                                       destructiveButtonTitle:@"Myself"
-                                                            otherButtonTitles:@"Another Person",nil];
-            
-            actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-            [actionSheet showInView:self.view];
-        }
-        else
-        {
+        CGRect faceBounds = faceFeature.bounds;
         
-            tagAlert = [[UIAlertView alloc] initWithTitle:@"Tag Photo" message:@"Do you want to tag this person?" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
-            [tagAlert show];
+        faceBounds.origin.y = self.originalImage.size.height-faceFeature.bounds.size.height-faceFeature.bounds.origin.y + 40.0f;
+        faceBounds.origin.x += 10.0f;
+        
+        
+        if (CGRectContainsPoint(faceBounds, touchPoint))
+        {
+            // NSLog(@"oh yeah!");
+            if (!taggedMyself)
+            {
+                //Ask user whether he wants to tag himself or another person
+                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Who do you want to Tag?"
+                                                                         delegate:self
+                                                                cancelButtonTitle:@"Cancel"
+                                                           destructiveButtonTitle:@"Myself"
+                                                                otherButtonTitles:@"Another Person",nil];
+                
+                actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+                [actionSheet showInView:self.view];
+            }
+            else
+            {
+                
+                tagAlert = [[UIAlertView alloc] initWithTitle:@"Tag Photo" message:@"Do you want to tag this person?" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+                [tagAlert show];
+            }
         }
     }
-}
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
@@ -264,7 +264,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             [self untagPhoto];
             
         }
-
+        
     }
 }
 
@@ -274,7 +274,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         //tag myself
         taggedMyself = TRUE;
         [self tagPerson:99999];
-
+        
     }
     else if (buttonIndex == actionSheet.cancelButtonIndex)
     {
@@ -282,7 +282,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         
     }
     else [self displayContacts];
-    }
+}
 
 -(void)displayContacts
 {
@@ -392,17 +392,17 @@ for (CIFaceFeature *faceFeature in self.facesArray)
 
 -(void)tagPerson: (ABRecordID)recordID
 {
-
+    
     [self getPhotoLocation];
     const char *dbPath = [databasePath UTF8String];
     
     if (sqlite3_open(dbPath, &database) == SQLITE_OK)
     {
-    
+        
         NSString *insertPersonSQL = [NSString stringWithFormat:@"INSERT INTO PERSONS VALUES (\"%d\")", recordID];
         const char *insert_stmt = [insertPersonSQL UTF8String];
         char *error;
-    
+        
         if (sqlite3_exec(database, insert_stmt, NULL, NULL, &error) == SQLITE_OK) {
             NSLog(@"insterted person");
         }
@@ -438,10 +438,10 @@ for (CIFaceFeature *faceFeature in self.facesArray)
             
             else
             {
-                NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL, CITY) VALUES (\"%d\",\"%@\" ,\"%@\")", recordID, self.imgURLString, self.city];
+                NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL, CITY) VALUES (\"%d\",\"%@\" ,\"%@\")", recordID, self.imgURLString, [self getPhotoLocation]];
                 
                 //without city
-               //  NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\")", recordID, self.imgURL];
+                //  NSString *insertMappingSQL = [NSString stringWithFormat:@"INSERT INTO MAPPINGS (PERSONID, IMG_URL) VALUES (\"%d\",\"%@\")", recordID, self.imgURL];
                 
                 insert_stmt = [insertMappingSQL UTF8String];
                 
@@ -452,7 +452,7 @@ for (CIFaceFeature *faceFeature in self.facesArray)
                 {
                     NSLog(@"error %s", error);
                 }
-
+                
             }
             
         }
@@ -460,44 +460,44 @@ for (CIFaceFeature *faceFeature in self.facesArray)
         {
             NSLog(@"some issue with prepared statement");
         }
-    
+        
         sqlite3_reset(statement);
-
+        
     }
     
     sqlite3_close(database);
-
+    
 }
 
 -(NSString *)getPhotoLocation
 {
     NSLog(@"getting photo with url: %@", self.imgURL);
-   // NSURL *imageURL = [NSURL URLWithString:self.imgURLString];
+    // NSURL *imageURL = [NSURL URLWithString:self.imgURLString];
     
     NSLog(@"got URL");
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.imgURL resultBlock:^(ALAsset *asset)
      {
-
-//                  CLLocationCoordinate2D coord = kSanFranciscoCoordinate;
-//                  CLLocation *location = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
-
+         
+         //                  CLLocationCoordinate2D coord = kSanFranciscoCoordinate;
+         //                  CLLocation *location = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+         
          CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
          NSLog(@"got location %f, %f", location.coordinate.latitude, location.coordinate.longitude);
          CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
          
-
+         
          
          [geocoder reverseGeocodeLocation:location
                         completionHandler:^(NSArray *placemarks, NSError *error) {
                             NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
                             
-//                            if (error){
-//                                NSLog(@"Geocode failed with error: %@", error);
-//                                [self displayError:error];
-//                                self.city = @"";
-//                                
-//                            }
+                            //                            if (error){
+                            //                                NSLog(@"Geocode failed with error: %@", error);
+                            //                                [self displayError:error];
+                            //                                self.city = @"";
+                            //
+                            //                            }
                             
                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
                             
@@ -519,48 +519,48 @@ for (CIFaceFeature *faceFeature in self.facesArray)
          // error handling
          NSLog(@"failure-----");
      }];
-
+    
     return self.city;
-
+    
 }
 
 // display a given NSError in an UIAlertView
 - (void)displayError:(NSError*)error
 {
-//    dispatch_async(dispatch_get_main_queue(),^ {
-//        [self lockUI:NO];
+    //    dispatch_async(dispatch_get_main_queue(),^ {
+    //        [self lockUI:NO];
     
-        NSString *message;
-        switch ([error code])
-        {
-            case kCLErrorGeocodeFoundNoResult: message = @"kCLErrorGeocodeFoundNoResult";
-                break;
-            case kCLErrorGeocodeCanceled: message = @"kCLErrorGeocodeCanceled";
-                break;
-            case kCLErrorGeocodeFoundPartialResult: message = @"kCLErrorGeocodeFoundNoResult";
-                break;
-            default: message = [error description];
-                break;
-        }
-        
-        UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"An error occurred."
-                                                         message:message
-                                                        delegate:nil
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil];;
-        [alert show];
-  //  });
+    NSString *message;
+    switch ([error code])
+    {
+        case kCLErrorGeocodeFoundNoResult: message = @"kCLErrorGeocodeFoundNoResult";
+            break;
+        case kCLErrorGeocodeCanceled: message = @"kCLErrorGeocodeCanceled";
+            break;
+        case kCLErrorGeocodeFoundPartialResult: message = @"kCLErrorGeocodeFoundNoResult";
+            break;
+        default: message = [error description];
+            break;
+    }
+    
+    UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"An error occurred."
+                                                     message:message
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];;
+    [alert show];
+    //  });
 }
 
 -(IBAction)untagConfirm:(id)sender
 {
     untagAlert =  [[UIAlertView alloc] initWithTitle:@"Confirm"
-                                                     message:@"Do you want to untag this photo?"
-                                                    delegate:self
-                                           cancelButtonTitle:@"Yes"
-                                           otherButtonTitles:@"Cancel",nil];;
+                                             message:@"Do you want to untag this photo?"
+                                            delegate:self
+                                   cancelButtonTitle:@"Yes"
+                                   otherButtonTitles:@"Cancel",nil];;
     [untagAlert show];
-
+    
 }
 
 

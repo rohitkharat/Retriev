@@ -527,7 +527,7 @@ NSArray *searchResults;
 {
  
     if (!self.citySelected && !self.personSelected && !myself) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@",,|,," message:@"Please select a Person or a City" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select a Person or a City" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
         return NO;
     }

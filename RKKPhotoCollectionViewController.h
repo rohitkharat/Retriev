@@ -22,11 +22,13 @@
 @property(weak, nonatomic) IBOutlet UICollectionView *collView;
 
 @property (nonatomic, retain) NSString *filePath;
-
+@property (nonatomic,retain ) NSString *pathy;
+@property (nonatomic)  BOOL didCreateVideo;
+@property (copy,   nonatomic) NSURL *movieURL;
 
 - (IBAction)collageMaking:(id)sender;
 - (IBAction)share:(id)sender;
-
+- (IBAction)collagey:(id)sender;
 
 -(IBAction)selectPhotos:(id)sender;
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;

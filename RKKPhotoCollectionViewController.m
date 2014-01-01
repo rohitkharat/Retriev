@@ -11,13 +11,18 @@
 #import <Social/Social.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "playVideo.h"
 
 
-@interface RKKPhotoCollectionViewController ()
+@interface RKKPhotoCollectionViewController () <UIAlertViewDelegate>
 
 {
     NSMutableArray *selectedRets;
     NSMutableArray *collageSelect;
+    BOOL stop;
+    BOOL disp;
+    UIAlertView *movieDoneAlert;
+    
 }
 
 @end
@@ -27,6 +32,7 @@
 
 @synthesize photosArray;
 @synthesize photoURLArray;
+@synthesize pathy;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -139,7 +145,28 @@
     
 }
 
-- (IBAction)collage:(id)sender {
+- (IBAction)collagey:(id)sender {
+    
+    [self collage];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    self.movieURL = info[UIImagePickerControllerMediaURL];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (BOOL)collage
+{
     
     if ([selectedRets count] < 4) {
         
@@ -148,13 +175,14 @@
             for (NSString *obj in collageSelect){
                 NSLog(@"From ArrayTag obj: %@", obj);
             }
-            [self createVideo];
+            stop = [self createVideo];
         }
         
         else
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos Selected" message:@"Please select some Photos to make a collage" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
             [alert show];
+            stop = FALSE;
         }
         
         
@@ -164,8 +192,11 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You can select only 3 photos" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
         [alert show];
+        stop = FALSE;
         
     }
+    
+    return stop;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -196,11 +227,11 @@
     //NSLog(@"%@", selectedRets);
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    return NO;
-    
-}
+//- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+//{
+//    return NO;
+//
+//}
 
 
 -(IBAction)selectPhotos:(id)sender
@@ -211,8 +242,10 @@
     
 }
 
--(void)createVideo
+
+-(BOOL)createVideo
 {
+    self.didCreateVideo = FALSE;
     NSLog(@"create VIDEO!");
     
     NSError *error = nil;
@@ -226,6 +259,7 @@
     NSString  *documentsDirectory = [paths objectAtIndex:0];
     self.filePath = [NSString stringWithFormat:@"%@/%@.mov", documentsDirectory,resultString];
     NSLog(@"filePath = %@", self.filePath);
+    
     
     
     UIImage *imj = [selectedRets objectAtIndex:0];
@@ -276,9 +310,9 @@
         //without maintaining aspect ratio
         buffer = [self pixelBufferFromCGImage:[[self imageWithImage:img scaledToSize:CGSizeMake(160, 280)] CGImage] andSize:img.size];
         
-//      maintain aspect ratio
-//        buffer = [self pixelBufferFromCGImage:[[self imageWithImage:img scaledToWidth:320.0f] CGImage] andSize:img.size];
-
+        //      maintain aspect ratio
+        //        buffer = [self pixelBufferFromCGImage:[[self imageWithImage:img scaledToWidth:320.0f] CGImage] andSize:img.size];
+        
         //CVPixelBufferRef buffer = [self pixelBufferFromCGImage:img.CGImage];
         
         BOOL append_ok = NO;
@@ -307,24 +341,50 @@
     NSString *openCommand = [NSString stringWithFormat:@"/usr/bin/open \"%@\"", NSTemporaryDirectory()];
     system([openCommand fileSystemRepresentation]);
     
+    self.didCreateVideo = TRUE;
     
     UISaveVideoAtPathToSavedPhotosAlbum (self.filePath,self, @selector(video:didFinishSavingWithError: contextInfo:), nil);
     
-    
+    return self.didCreateVideo;
     
 }
+
+- (void) openPhotoGallery
+{
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = NO;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    picker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (alertView == movieDoneAlert) {
+        [self openPhotoGallery];
+    }
+}
+
 
 - (void)video:(NSString *) videoPath didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
     if (error) {
         NSLog(@"Finished saving video with error: %@", error);
+        self.didCreateVideo = FALSE;
     }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Done"
-                                                   message:@"Movie succesfully exported."
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles:nil, nil];
-    [alert show];
+    movieDoneAlert = [[UIAlertView alloc]initWithTitle:@"Done"
+                                               message:@"Movie succesfully exported."
+                                              delegate:self
+                                     cancelButtonTitle:@"OK"
+                                     otherButtonTitles:nil, nil];
+    [movieDoneAlert show];
+    //stop = NO;
 }
+
 
 -(CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image andSize:(CGSize) size
 {
@@ -422,6 +482,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    
+    return [self collage];
+    
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"passVideo"]) {
+        //[self createVideo];
+        NSLog(@"abc@");
+        //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        playVideo *destViewController = segue.destinationViewController;
+        destViewController.movieURL = [NSURL URLWithString:self.filePath];
+        NSLog(@"%@",destViewController.movieURL);
+    }
 }
 
 @end
