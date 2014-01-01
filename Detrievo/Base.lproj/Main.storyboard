@@ -193,7 +193,7 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="collage:" destination="6Jl-F3-RlJ" eventType="touchUpInside" id="ETK-pE-c9e"/>
+                                        <action selector="collagey:" destination="6Jl-F3-RlJ" eventType="touchUpInside" id="Bcw-qg-XlX"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -301,7 +301,6 @@
                     <connections>
                         <segue destination="Hfi-hN-K6G" kind="relationship" relationship="viewControllers" id="SUk-Ux-ee1"/>
                         <segue destination="QUy-BD-bpt" kind="relationship" relationship="viewControllers" id="M8t-EP-wfW"/>
-                        <segue destination="vQD-jK-wfh" kind="relationship" relationship="viewControllers" id="fD5-o1-Ij9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
