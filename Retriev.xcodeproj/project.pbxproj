@@ -27,8 +27,7 @@
 		714341A9184582E000C179AD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714341A8184582E000C179AD /* CoreLocation.framework */; };
 		71C58E621855A68A00AFC8D6 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 71C58E611855A68A00AFC8D6 /* white.png */; };
 		71C58E641855A6F900AFC8D6 /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 71C58E631855A6F900AFC8D6 /* grey.png */; };
-		9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2451837641900E0F77D /* RKKCameraViewController.m */; };
-		9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9904F2481837657200E0F77D /* RKKTabViewController.m */; };
+		71FD45BE1876683E007C09F1 /* blackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71FD45BD1876683E007C09F1 /* blackButton@2x.png */; };
 		990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 990F48811838DE5C003CCB90 /* libsqlite3.dylib */; };
 		994A1DFF182DC5270065C8A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1DFE182DC5270065C8A9 /* Foundation.framework */; };
 		994A1E01182DC5270065C8A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994A1E00182DC5270065C8A9 /* CoreGraphics.framework */; };
@@ -69,22 +68,19 @@
 		712DF07E1843507F00F0A108 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		713F82E618739780001FC120 /* playVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playVideo.h; sourceTree = "<group>"; };
 		713F82E718739781001FC120 /* playVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playVideo.m; sourceTree = "<group>"; };
-		713F82E91875F9F4001FC120 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueButton@2x.png"; sourceTree = "<group>"; };
+		713F82E91875F9F4001FC120 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueButton@2x.png"; path = "Detrievo/blueButton@2x.png"; sourceTree = "<group>"; };
 		713F82EB187623D8001FC120 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKKPhotoCollectionViewController.h; path = ../RKKPhotoCollectionViewController.h; sourceTree = "<group>"; };
 		714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKPhotoCollectionViewController.m; path = ../RKKPhotoCollectionViewController.m; sourceTree = "<group>"; };
-		7143419F1844517A00C179AD /* footer_banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = footer_banner.png; sourceTree = "<group>"; };
-		714341A01844517A00C179AD /* header_banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_banner.png; sourceTree = "<group>"; };
-		714341A11844517A00C179AD /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame.png"; sourceTree = "<group>"; };
+		7143419F1844517A00C179AD /* footer_banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = footer_banner.png; path = Detrievo/footer_banner.png; sourceTree = "<group>"; };
+		714341A01844517A00C179AD /* header_banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = header_banner.png; path = Detrievo/header_banner.png; sourceTree = "<group>"; };
+		714341A11844517A00C179AD /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "photo-frame.png"; path = "Detrievo/photo-frame.png"; sourceTree = "<group>"; };
 		714341A51845823B00C179AD /* RKKRetrievedPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKRetrievedPhoto.h; sourceTree = "<group>"; };
 		714341A61845823B00C179AD /* RKKRetrievedPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKRetrievedPhoto.m; sourceTree = "<group>"; };
 		714341A8184582E000C179AD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		71C58E611855A68A00AFC8D6 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
-		71C58E631855A6F900AFC8D6 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
-		9904F2441837641900E0F77D /* RKKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKCameraViewController.h; sourceTree = "<group>"; };
-		9904F2451837641900E0F77D /* RKKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKCameraViewController.m; sourceTree = "<group>"; };
-		9904F2471837657200E0F77D /* RKKTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKKTabViewController.h; sourceTree = "<group>"; };
-		9904F2481837657200E0F77D /* RKKTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKKTabViewController.m; sourceTree = "<group>"; };
+		71C58E611855A68A00AFC8D6 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white.png; path = Detrievo/white.png; sourceTree = "<group>"; };
+		71C58E631855A6F900AFC8D6 /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey.png; path = Detrievo/grey.png; sourceTree = "<group>"; };
+		71FD45BD1876683E007C09F1 /* blackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackButton@2x.png"; path = "Detrievo/blackButton@2x.png"; sourceTree = "<group>"; };
 		990F48811838DE5C003CCB90 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		994A1DFB182DC5270065C8A9 /* Retriev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Retriev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		994A1DFE182DC5270065C8A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -140,6 +136,13 @@
 		712269C3184B3E6700C7C815 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				71FD45BD1876683E007C09F1 /* blackButton@2x.png */,
+				713F82E91875F9F4001FC120 /* blueButton@2x.png */,
+				71C58E631855A6F900AFC8D6 /* grey.png */,
+				71C58E611855A68A00AFC8D6 /* white.png */,
+				7143419F1844517A00C179AD /* footer_banner.png */,
+				714341A01844517A00C179AD /* header_banner.png */,
+				714341A11844517A00C179AD /* photo-frame.png */,
 				712269D8184B643300C7C815 /* redo.png */,
 				712269D6184B4B4200C7C815 /* magnify.png */,
 				712269D2184B474100C7C815 /* camera.png */,
@@ -203,10 +206,6 @@
 				994A1E14182DC5270065C8A9 /* RKKFirstViewController.m */,
 				994A1E16182DC5270065C8A9 /* RKKSecondViewController.h */,
 				994A1E17182DC5270065C8A9 /* RKKSecondViewController.m */,
-				9904F2471837657200E0F77D /* RKKTabViewController.h */,
-				9904F2481837657200E0F77D /* RKKTabViewController.m */,
-				9904F2441837641900E0F77D /* RKKCameraViewController.h */,
-				9904F2451837641900E0F77D /* RKKCameraViewController.m */,
 				994A1E19182DC5280065C8A9 /* Images.xcassets */,
 				994A1E05182DC5270065C8A9 /* Supporting Files */,
 			);
@@ -216,12 +215,6 @@
 		994A1E05182DC5270065C8A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				713F82E91875F9F4001FC120 /* blueButton@2x.png */,
-				71C58E631855A6F900AFC8D6 /* grey.png */,
-				71C58E611855A68A00AFC8D6 /* white.png */,
-				7143419F1844517A00C179AD /* footer_banner.png */,
-				714341A01844517A00C179AD /* header_banner.png */,
-				714341A11844517A00C179AD /* photo-frame.png */,
 				994A1E06182DC5270065C8A9 /* Retriev-Info.plist */,
 				994A1E07182DC5270065C8A9 /* InfoPlist.strings */,
 				994A1E0A182DC5270065C8A9 /* main.m */,
@@ -297,7 +290,7 @@
 				ORGANIZATIONNAME = rkharat;
 				TargetAttributes = {
 					994A1DFA182DC5270065C8A9 = {
-						DevelopmentTeam = BWSLUFSJRA;
+						DevelopmentTeam = MZH3SMCMJX;
 					};
 					994A1E1E182DC5280065C8A9 = {
 						TestTargetID = 994A1DFA182DC5270065C8A9;
@@ -342,6 +335,7 @@
 				712269CB184B3E9900C7C815 /* UIBarButtonCamera_2x.png in Resources */,
 				712269D3184B474100C7C815 /* camera.png in Resources */,
 				994A1E1A182DC5280065C8A9 /* Images.xcassets in Resources */,
+				71FD45BE1876683E007C09F1 /* blackButton@2x.png in Resources */,
 				994A1E09182DC5270065C8A9 /* InfoPlist.strings in Resources */,
 				713F82EA1875F9F4001FC120 /* blueButton@2x.png in Resources */,
 				994A1E12182DC5270065C8A9 /* Main.storyboard in Resources */,
@@ -366,12 +360,10 @@
 				994A1E0B182DC5270065C8A9 /* main.m in Sources */,
 				994A1E0F182DC5270065C8A9 /* RKKAppDelegate.m in Sources */,
 				714341A71845823B00C179AD /* RKKRetrievedPhoto.m in Sources */,
-				9904F2461837641900E0F77D /* RKKCameraViewController.m in Sources */,
 				713F82E818739781001FC120 /* playVideo.m in Sources */,
 				994A1E15182DC5270065C8A9 /* RKKFirstViewController.m in Sources */,
 				714341751843BC9A00C179AD /* RKKPhotoCollectionViewController.m in Sources */,
 				994A1E18182DC5270065C8A9 /* RKKSecondViewController.m in Sources */,
-				9904F2491837657200E0F77D /* RKKTabViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,13 +490,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Detrievo/Retriev-Prefix.pch";
 				INFOPLIST_FILE = "Detrievo/Retriev-Info.plist";
 				PRODUCT_NAME = Retriev;
-				PROVISIONING_PROFILE = "5611DCC5-87E4-42D4-BF62-B81F091E0FFA";
+				PROVISIONING_PROFILE = "DF5D4293-40AF-4DFB-BD67-FA6DF55FF981";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -514,13 +508,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Detrievo/Retriev-Prefix.pch";
 				INFOPLIST_FILE = "Detrievo/Retriev-Info.plist";
 				PRODUCT_NAME = Retriev;
-				PROVISIONING_PROFILE = "5611DCC5-87E4-42D4-BF62-B81F091E0FFA";
+				PROVISIONING_PROFILE = "DF5D4293-40AF-4DFB-BD67-FA6DF55FF981";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

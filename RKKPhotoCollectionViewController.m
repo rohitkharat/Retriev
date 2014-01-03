@@ -338,11 +338,7 @@
     
     [videoStream markAsFinished];
     [videoWriter finishWriting];
-    
-    //this is not being called for some reason so check why
-    //[self saveMovieToCameraRoll];
-    
-    // [self CompileFilesToMakeMovie];
+
     
     NSString *openCommand = [NSString stringWithFormat:@"/usr/bin/open \"%@\"", NSTemporaryDirectory()];
     system([openCommand fileSystemRepresentation]);
@@ -458,30 +454,6 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
-
-//code to save to photo library of the iPhone
-//- (void)saveMovieToCameraRoll
-//{
-//    NSLog(@"saveMovieToCameraRoll");
-//    // save the movie to the camera roll
-//	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//	//NSLog(@"writing \"%@\" to photos album", outputURL);
-//	[library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:self.filePath]
-//								completionBlock:^(NSURL *assetURL, NSError *error) {
-//									if (error) {
-//										NSLog(@"assets library failed (%@)", error);
-//									}
-//									else {
-//										[[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.filePath] error:&error];
-//										if (error)
-//											NSLog(@"Couldn't remove temporary movie file \"%@\"", self.filePath);
-//									}
-//									self.filePath = nil;
-//								}];
-//}
-
-
-
 
 
 - (void)didReceiveMemoryWarning

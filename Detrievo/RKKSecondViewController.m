@@ -103,12 +103,14 @@ static sqlite3_stmt *statement = nil;
 	// Do any additional setup after loading the view, typically from a nib.
     [self showPhotoLibrary:nil];
     
-    UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
+    UIImage *blueButtonImage = [[UIImage imageNamed:@"blueButton.png"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    [untagButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [anotherPhotoButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    UIImage *blackButtonImage = [[UIImage imageNamed:@"blackButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    [untagButton setBackgroundImage:blackButtonImage forState:UIControlStateNormal];
+    [anotherPhotoButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
     
-    self.canDisplayBannerAds = TRUE;    
+    self.canDisplayBannerAds = TRUE;
 }
 
 -(IBAction)showPhotoLibrary:(id)sender
@@ -201,7 +203,7 @@ static sqlite3_stmt *statement = nil;
         
         // add a border around the newly created UIView
         faceView.layer.borderWidth = 1;
-        faceView.layer.borderColor = [[UIColor orangeColor] CGColor];
+        faceView.layer.borderColor = [[UIColor whiteColor] CGColor];
         
         // add the new view to create a box around the face
         [faceContainer addSubview:faceView];

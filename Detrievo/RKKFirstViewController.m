@@ -414,10 +414,6 @@ NSArray *searchResults;
         if (sqlite3_prepare_v2(database,
                                select_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            __block NSMutableArray *tempURLs = [[NSMutableArray alloc]init];
-
-           // int count = 0;
-            
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 self.imagesFound = TRUE;
