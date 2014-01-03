@@ -11,19 +11,21 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <sqlite3.h>
+#import <iAd/iAd.h>
 
 
-@interface RKKFirstViewController : UIViewController
+@interface RKKFirstViewController : UIViewController 
 
 {
     ABPeoplePickerNavigationController *picker ;
     IBOutlet UIImageView *imageView;
-    BOOL imagesFound;
     
     NSString *databasePath;
     RKKRetrievedPhoto *retrievedPhoto;
     
     BOOL myself;
+    IBOutlet UIButton *getPhotosButton;
+    
 }
 
 -(IBAction)displayContacts:(id)sender;
@@ -70,5 +72,8 @@
 @property (nonatomic, retain) NSMutableString *namesToBeDisplayed;
 @property (nonatomic, retain) NSMutableArray *personIds;
 @property (nonatomic, retain) IBOutlet UIButton *addButton;
+
+@property BOOL imagesFound;
+
 
 @end

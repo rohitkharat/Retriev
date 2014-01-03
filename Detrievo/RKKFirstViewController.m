@@ -12,11 +12,12 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
+#import <iAd/iAd.h>
 
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
-@interface RKKFirstViewController () <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
+@interface RKKFirstViewController () <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, ADBannerViewDelegate>
 
 @property (nonatomic, assign) ABAddressBookRef addressBook;
 @property (nonatomic, strong) NSMutableArray *contactsArray;
@@ -28,6 +29,7 @@ static sqlite3_stmt *statement = nil;
 NSArray *searchResults;
 
 @synthesize contactName;
+@synthesize imagesFound;
 
 - (void)viewDidLoad
 {
@@ -40,7 +42,7 @@ NSArray *searchResults;
     self.filteredImages = [[NSMutableArray alloc]init];
     self.retrievedPhotosArray = [[NSMutableArray alloc]init];
     retrievedPhoto = [[RKKRetrievedPhoto alloc]init];
-    imagesFound = FALSE;
+    self.imagesFound = FALSE;
     self.citySelected = FALSE;
     self.datesSelected = FALSE;
     self.personSelected = FALSE;
@@ -51,6 +53,11 @@ NSArray *searchResults;
     self.personIds = [[NSMutableArray alloc]init];
     self.contactName.lineBreakMode = NSLineBreakByWordWrapping;
     
+    UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    [getPhotosButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    
+    self.canDisplayBannerAds = TRUE;
    // NSArray *personids = [NSArray arrayWithObjects:@"2",@"5",@"99999", nil];
    // [self getQueryForPersons:[NSMutableArray arrayWithArray:personids] andCity:@"San Francisco"];
 }
@@ -384,7 +391,7 @@ NSArray *searchResults;
     [self.imageURLs removeAllObjects];
     [self.retrievedPhotosArray removeAllObjects];
     [self.images removeAllObjects];
-    imagesFound = FALSE;
+    self.imagesFound = FALSE;
     
     if (myself) {
         self.personID = 99999;
@@ -407,25 +414,48 @@ NSArray *searchResults;
         if (sqlite3_prepare_v2(database,
                                select_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            int count = 0;
+            __block NSMutableArray *tempURLs = [[NSMutableArray alloc]init];
+
+           // int count = 0;
             
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                count++;
-                imagesFound = TRUE;
-                NSLog(@"found image for this person");
+                self.imagesFound = TRUE;
                 NSString *URLString = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
-                NSLog(@"url of the image = %@", URLString);
-                [self.imageURLs addObject:URLString];
+              
+                NSURL *imageURL = [NSURL URLWithString:URLString];
+                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
                 
-                NSLog(@"no. of objects in array: %d", self.imageURLs.count);
+                
+                [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
+                 {
+                     if (asset) {
+                         self.imagesFound = TRUE;
+
+                         NSLog(@"url of the image = %@", URLString);
+                         [self.imageURLs addObject:URLString];
+                         //self.imageURLs = tempURLs;
+                         
+                         NSLog(@"no. of objects in array: %lu", (unsigned long)self.imageURLs.count);
+                     }
+                 }
+                        failureBlock:^(NSError *error)
+                 {
+                     // error handling
+                     NSLog(@"failure-----");
+                 }];
+                NSLog(@"OUTSIDE BLOCK no. of objects in array: %lu", (unsigned long)self.imageURLs.count);
                 
             }
             
-            if (!imagesFound) {
+            if (!self.imagesFound)
+            {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"No photos found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
+
+            
+            //self.imageURLs = tempURLs;
             
         }
         else
@@ -439,39 +469,50 @@ NSArray *searchResults;
     
     sqlite3_close(database);
     
-    //code to get image from url
-    for(NSString *imageURLString in self.imageURLs)
-    {
-        NSURL *imageURL = [NSURL URLWithString:imageURLString];
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
-         {
-             UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
-             
-             //add the image to a cell in the collection view
-             //imageView.image = copyOfOriginalImage;
-             
-             //add the asset details in the retrievedPhoto object
-             retrievedPhoto = [[RKKRetrievedPhoto alloc]init];
-             
-             retrievedPhoto.photoURL = imageURL;
-             retrievedPhoto.photoLocation = [asset valueForProperty:ALAssetPropertyLocation];
-             retrievedPhoto.photoDate = [asset valueForProperty:ALAssetPropertyDate];
-             retrievedPhoto.image = copyOfOriginalImage;
-             
-             [self.images addObject:copyOfOriginalImage];
-             [self.retrievedPhotosArray addObject:retrievedPhoto];
-             NSLog(@"retrievedPhotosArray count = %lu", (unsigned long)self.retrievedPhotosArray.count);
-         }
-                failureBlock:^(NSError *error)
-         {
-             // error handling
-             NSLog(@"failure-----");
-         }];
+//    //code to get image from url
+//    for(NSString *imageURLString in self.imageURLs)
+//    {
+//        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+//        
+//        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//        [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
+//         {
+//             if (asset) {
+//                 
+//                 
+//                 UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
+//                 
+//                 //add the image to a cell in the collection view
+//                 //imageView.image = copyOfOriginalImage;
+//                 
+//                 //add the asset details in the retrievedPhoto object
+//                 retrievedPhoto = [[RKKRetrievedPhoto alloc]init];
+//                 
+//                 retrievedPhoto.photoURL = imageURL;
+//                 retrievedPhoto.photoLocation = [asset valueForProperty:ALAssetPropertyLocation];
+//                 retrievedPhoto.photoDate = [asset valueForProperty:ALAssetPropertyDate];
+//                 retrievedPhoto.image = copyOfOriginalImage;
+//                 
+//                 [self.images addObject:copyOfOriginalImage];
+//                 [self.retrievedPhotosArray addObject:retrievedPhoto];
+//                 NSLog(@"retrievedPhotosArray count = %lu", (unsigned long)self.retrievedPhotosArray.count);
+//             }
+//             
+//         }
+//                failureBlock:^(NSError *error)
+//         {
+//             // error handling
+//             NSLog(@"failure-----");
+//         }];
+//    }
+    
+    if (self.imageURLs.count > 0) {
+        NSLog(@"self.imageURLs count = %lu", (unsigned long)self.imageURLs.count);
+        self.imagesFound = TRUE;
     }
     
-    return imagesFound;
+    
+    return self.imagesFound;
     
 }
 
@@ -531,20 +572,24 @@ NSArray *searchResults;
         [alert show];
         return NO;
     }
-    return [self getPhotos];
+    
+    [self getPhotos];
+
+    return TRUE;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
-    NSLog(@"number of photos being sent = %d", self.retrievedPhotosArray.count);
+   // NSLog(@"number of urls being sent = %lu", (unsigned long)self.retrievedPhotosArray.count);
     
     if ([segue.identifier isEqualToString:@"showPhotos"])
     {
         
         RKKPhotoCollectionViewController *photoCollectionViewController = [segue destinationViewController];
-        
+        NSLog(@"at last stage... array count = %lu", (unsigned long)self.imageURLs.count);
         photoCollectionViewController.photoURLArray = self.imageURLs;
+        photoCollectionViewController.interstitialPresentationPolicy = ADInterstitialPresentationPolicyAutomatic;
         
     }
 }
@@ -631,7 +676,11 @@ shouldReloadTableForSearchString:(NSString *)searchString
 
 }
 
-
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"error with Ad Banner: %@", error);
+    [banner setHidden:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {

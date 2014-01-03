@@ -17,6 +17,8 @@
 		712269D9184B643300C7C815 /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 712269D8184B643300C7C815 /* redo.png */; };
 		712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712DF07E1843507F00F0A108 /* AssetsLibrary.framework */; };
 		713F82E818739781001FC120 /* playVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 713F82E718739781001FC120 /* playVideo.m */; };
+		713F82EA1875F9F4001FC120 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 713F82E91875F9F4001FC120 /* blueButton@2x.png */; };
+		713F82EC187623D8001FC120 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713F82EB187623D8001FC120 /* iAd.framework */; };
 		714341751843BC9A00C179AD /* RKKPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */; };
 		714341A21844517A00C179AD /* footer_banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 7143419F1844517A00C179AD /* footer_banner.png */; };
 		714341A31844517A00C179AD /* header_banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 714341A01844517A00C179AD /* header_banner.png */; };
@@ -67,6 +69,8 @@
 		712DF07E1843507F00F0A108 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		713F82E618739780001FC120 /* playVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playVideo.h; sourceTree = "<group>"; };
 		713F82E718739781001FC120 /* playVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playVideo.m; sourceTree = "<group>"; };
+		713F82E91875F9F4001FC120 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueButton@2x.png"; sourceTree = "<group>"; };
+		713F82EB187623D8001FC120 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		714341731843BC9A00C179AD /* RKKPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKKPhotoCollectionViewController.h; path = ../RKKPhotoCollectionViewController.h; sourceTree = "<group>"; };
 		714341741843BC9A00C179AD /* RKKPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKPhotoCollectionViewController.m; path = ../RKKPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		7143419F1844517A00C179AD /* footer_banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = footer_banner.png; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				713F82EC187623D8001FC120 /* iAd.framework in Frameworks */,
 				714341A9184582E000C179AD /* CoreLocation.framework in Frameworks */,
 				712DF07F1843507F00F0A108 /* AssetsLibrary.framework in Frameworks */,
 				990F48821838DE5C003CCB90 /* libsqlite3.dylib in Frameworks */,
@@ -170,6 +175,7 @@
 		994A1DFD182DC5270065C8A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				713F82EB187623D8001FC120 /* iAd.framework */,
 				714341A8184582E000C179AD /* CoreLocation.framework */,
 				712DF07E1843507F00F0A108 /* AssetsLibrary.framework */,
 				990F48811838DE5C003CCB90 /* libsqlite3.dylib */,
@@ -210,6 +216,7 @@
 		994A1E05182DC5270065C8A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				713F82E91875F9F4001FC120 /* blueButton@2x.png */,
 				71C58E631855A6F900AFC8D6 /* grey.png */,
 				71C58E611855A68A00AFC8D6 /* white.png */,
 				7143419F1844517A00C179AD /* footer_banner.png */,
@@ -336,6 +343,7 @@
 				712269D3184B474100C7C815 /* camera.png in Resources */,
 				994A1E1A182DC5280065C8A9 /* Images.xcassets in Resources */,
 				994A1E09182DC5270065C8A9 /* InfoPlist.strings in Resources */,
+				713F82EA1875F9F4001FC120 /* blueButton@2x.png in Resources */,
 				994A1E12182DC5270065C8A9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

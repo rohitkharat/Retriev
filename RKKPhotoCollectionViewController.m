@@ -39,6 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -61,6 +62,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    
     return self.photoURLArray.count;
 }
 
@@ -71,17 +73,21 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
-    
     //code to get image from url
     NSURL *imageURL = [NSURL URLWithString:[self.photoURLArray objectAtIndex:indexPath.row]];
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:imageURL resultBlock:^(ALAsset *asset)
      {
-         UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
-         
-         imageView.image = copyOfOriginalImage;
-         [self.photosArray addObject:copyOfOriginalImage];
+         if (asset)
+         {
+             UIImage  *copyOfOriginalImage = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
+             
+             imageView.image = copyOfOriginalImage;
+             [self.photosArray addObject:copyOfOriginalImage];
+         }
+         else
+             NSLog(@"no asset");
      }
             failureBlock:^(NSError *error)
      {
@@ -496,7 +502,6 @@
     
     if ([segue.identifier isEqualToString:@"passVideo"]) {
         //[self createVideo];
-        NSLog(@"abc@");
         //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         playVideo *destViewController = segue.destinationViewController;
         destViewController.movieURL = [NSURL URLWithString:self.filePath];

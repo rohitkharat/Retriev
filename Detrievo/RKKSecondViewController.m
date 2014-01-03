@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
+#import <iAd/iAd.h>
 
 #define kSanFranciscoCoordinate CLLocationCoordinate2DMake(37.776278, -122.419367)
 
@@ -21,7 +22,7 @@ static sqlite3_stmt *statement = nil;
 //float scale_height = 0.0;
 
 
-@interface RKKSecondViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
+@interface RKKSecondViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, ADBannerViewDelegate>
 
 @property (nonatomic, assign) ABAddressBookRef addressBook;
 @property (nonatomic, strong) NSMutableArray *contactsArray;
@@ -100,9 +101,14 @@ static sqlite3_stmt *statement = nil;
     taggedMyself = FALSE;
     [self createDB];
 	// Do any additional setup after loading the view, typically from a nib.
-    
     [self showPhotoLibrary:nil];
     
+    UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    [untagButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [anotherPhotoButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    
+    self.canDisplayBannerAds = TRUE;    
 }
 
 -(IBAction)showPhotoLibrary:(id)sender
@@ -599,6 +605,12 @@ static sqlite3_stmt *statement = nil;
     
     sqlite3_close(database);
     
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"error with Ad Banner: %@", error);
+    [banner setHidden:YES];
 }
 
 

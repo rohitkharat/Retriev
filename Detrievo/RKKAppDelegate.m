@@ -7,6 +7,7 @@
 //
 
 #import "RKKAppDelegate.h"
+#import <iAd/iAd.h>
 
 @implementation RKKAppDelegate 
 
@@ -16,6 +17,8 @@
     self.tabBarController = [[UITabBarController alloc]init];
     self.tabBarController = (UITabBarController *)self.window.rootViewController;
 
+    [UIViewController prepareInterstitialAds];
+    
     return YES;
 }
 							

@@ -19,6 +19,9 @@
     BOOL taggedMyself;
     UIAlertView *tagAlert;
     UIAlertView *untagAlert;
+    
+    IBOutlet UIButton *untagButton;
+    IBOutlet UIButton *anotherPhotoButton;
 
 }
 
