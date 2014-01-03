@@ -174,7 +174,7 @@
 - (BOOL)collage
 {
     
-    if ([selectedRets count] < 4) {
+    if ([selectedRets count] < 6) {
         
         if ([selectedRets count] > 0){
             
@@ -196,7 +196,7 @@
     // }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You can select only 3 photos" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You can select only 5 photos" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:Nil, nil];
         [alert show];
         stop = FALSE;
         
