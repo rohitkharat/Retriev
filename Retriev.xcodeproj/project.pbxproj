@@ -492,7 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Kharat (78B6SN5YK9)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Kharat (MZH3SMCMJX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

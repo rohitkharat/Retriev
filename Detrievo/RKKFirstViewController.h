@@ -14,7 +14,7 @@
 #import <iAd/iAd.h>
 
 
-@interface RKKFirstViewController : UIViewController 
+@interface RKKFirstViewController : UIViewController <ADBannerViewDelegate>
 
 {
     ABPeoplePickerNavigationController *picker ;

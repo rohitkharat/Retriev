@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
-#import <iAd/iAd.h>
 
 #define kSanFranciscoCoordinate CLLocationCoordinate2DMake(37.776278, -122.419367)
 
@@ -22,7 +21,7 @@ static sqlite3_stmt *statement = nil;
 //float scale_height = 0.0;
 
 
-@interface RKKSecondViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, ADBannerViewDelegate>
+@interface RKKSecondViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
 
 @property (nonatomic, assign) ABAddressBookRef addressBook;
 @property (nonatomic, strong) NSMutableArray *contactsArray;
@@ -609,10 +608,21 @@ static sqlite3_stmt *statement = nil;
     
 }
 
+-(void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1];
+    [banner setAlpha:1];
+    [UIView commitAnimations];
+}
+
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
     NSLog(@"error with Ad Banner: %@", error);
-    [banner setHidden:YES];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1];
+    [banner setAlpha:0];
+    [UIView commitAnimations];
 }
 
 

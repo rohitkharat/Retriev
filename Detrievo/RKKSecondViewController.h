@@ -10,8 +10,9 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <sqlite3.h>
+#import <iAd/iAd.h>
 
-@interface RKKSecondViewController : UIViewController
+@interface RKKSecondViewController : UIViewController <ADBannerViewDelegate>
 
 {
     ABPeoplePickerNavigationController *picker ;
