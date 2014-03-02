@@ -110,6 +110,7 @@ static sqlite3_stmt *statement = nil;
     [anotherPhotoButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
     
     self.canDisplayBannerAds = TRUE;
+    
 }
 
 -(IBAction)showPhotoLibrary:(id)sender

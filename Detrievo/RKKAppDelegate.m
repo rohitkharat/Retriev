@@ -16,6 +16,11 @@
     // Override point for customization after application launch.
     self.tabBarController = [[UITabBarController alloc]init];
     self.tabBarController = (UITabBarController *)self.window.rootViewController;
+    self.tabBarController.tabBar.barTintColor = [UIColor colorWithRed:0.23 green:0.49 blue:0.8 alpha:1.0];
+
+    [self.tabBarController.tabBar setSelectedImageTintColor:[UIColor whiteColor]];
+    self.tabBarController.tabBar.tintColor = [UIColor whiteColor];
+
 
     [UIViewController prepareInterstitialAds];
     
@@ -51,7 +56,7 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item; // called when a new view is selected by the user (but not programatically)
 {
-    NSLog(@"tab %d selected", [self.tabBarController selectedIndex]);
+    //NSLog(@"tab %d selected", [self.tabBarController selectedIndex]);
     
 }
 

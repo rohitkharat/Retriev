@@ -26,6 +26,21 @@
     BOOL myself;
     IBOutlet UIButton *getPhotosButton;
     
+    UIImage *defaultContactImage;
+    
+    IBOutlet UILabel *firstName1;
+    IBOutlet UILabel *lastName1;
+    IBOutlet UILabel *firstName2;
+    IBOutlet UILabel *lastName2;
+    IBOutlet UILabel *firstName3;
+    IBOutlet UILabel *lastName3;
+    IBOutlet UILabel *firstName4;
+    IBOutlet UILabel *lastName4;
+    IBOutlet UILabel *myselfLabel;
+    IBOutlet UILabel *getPhotosOfLabel;
+    
+    UIColor *universalAppColor;
+    
 }
 
 -(IBAction)displayContacts:(id)sender;
@@ -42,6 +57,8 @@
 -(IBAction)setMyself:(id)sender;
 
 -(NSMutableString *)getQueryForPersons: (NSMutableArray *)personids andCity: (NSString *)city;
+
+-(void)displaySelectedContact;
 
 @property (nonatomic, retain) NSArray *persons;
 @property (nonatomic) ABRecordID personID;
@@ -72,6 +89,18 @@
 @property (nonatomic, retain) NSMutableString *namesToBeDisplayed;
 @property (nonatomic, retain) NSMutableArray *personIds;
 @property (nonatomic, retain) IBOutlet UIButton *addButton;
+
+@property (nonatomic, retain) IBOutlet UIButton *contactButton1;
+@property (nonatomic, retain) IBOutlet UIButton *contactButton2;
+@property (nonatomic, retain) IBOutlet UIButton *contactButton3;
+@property (nonatomic, retain) IBOutlet UIButton *contactButton4;
+
+@property (nonatomic, retain) UIImage *contactImage;
+@property (nonatomic) NSInteger selectedButtonTag;
+@property (nonatomic) BOOL personHasImage;
+@property (nonatomic, retain) NSString *selectedContactFirstName;
+@property (nonatomic, retain) NSString *selectedContactLastName;
+@property (nonatomic, retain) IBOutlet UIButton *myselfIcon;
 
 @property BOOL imagesFound;
 

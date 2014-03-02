@@ -29,6 +29,10 @@ NSArray *searchResults;
 
 @synthesize contactName;
 @synthesize imagesFound;
+@synthesize contactButton1, contactButton2, contactButton3, contactButton4;
+@synthesize contactImage;
+@synthesize selectedButtonTag;
+@synthesize personHasImage, selectedContactFirstName, selectedContactLastName, myselfIcon;
 
 - (void)viewDidLoad
 {
@@ -55,8 +59,65 @@ NSArray *searchResults;
     UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     [getPhotosButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    
     self.canDisplayBannerAds = TRUE;
+    
+    universalAppColor = [UIColor colorWithRed:0.23 green:0.49 blue:0.8 alpha:1.0];
+    
+    self.navigationController.navigationBar.barTintColor = universalAppColor;
+    
+    //----- code to change navigation title font and color --------
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:20];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Retriev";
+    [label setShadowColor:[UIColor darkGrayColor]];
+    [label setShadowOffset:CGSizeMake(0, -0.5)];
+    self.navigationItem.titleView = label;
+    
+//    //----- code to change imageview to circular view
+//    UIImageView *contactImageView = [[UIImageView alloc]init];
+//
+//    contactImageView.layer.cornerRadius = 25;
+//    contactImageView.layer.masksToBounds = YES;
+//    contactImageView.image = [UIImage imageNamed:@"CF_Contact_Icon.png"];
+//    
+//    contactImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    contactImageView.layer.borderWidth = 1.0;
+    
+    defaultContactImage = [UIImage imageNamed:@"Icon-contact.png"];
+    
+    float cornerRadius = 25;
+    UIColor *borderColor = [UIColor lightGrayColor];
+    float borderWidth = 0.5;
+    
+    self.myselfIcon.layer.cornerRadius = cornerRadius;
+    self.myselfIcon.layer.masksToBounds = YES;
+    self.myselfIcon.layer.borderColor = borderColor.CGColor;
+    self.myselfIcon.layer.borderWidth = borderWidth;
+    
+    self.contactButton1.layer.cornerRadius = cornerRadius;
+    self.contactButton1.layer.masksToBounds = YES;
+    self.contactButton1.layer.borderColor = borderColor.CGColor;
+    self.contactButton1.layer.borderWidth = borderWidth;
+
+    self.contactButton2.layer.cornerRadius = cornerRadius;
+    self.contactButton2.layer.masksToBounds = YES;
+    self.contactButton2.layer.borderColor = borderColor.CGColor;
+    self.contactButton2.layer.borderWidth = borderWidth;
+    
+    self.contactButton3.layer.cornerRadius = cornerRadius;
+    self.contactButton3.layer.masksToBounds = YES;
+    self.contactButton3.layer.borderColor = borderColor.CGColor;
+    self.contactButton3.layer.borderWidth = borderWidth;
+    
+    self.contactButton4.layer.cornerRadius = cornerRadius;
+    self.contactButton4.layer.masksToBounds = YES;
+    self.contactButton4.layer.borderColor = borderColor.CGColor;
+    self.contactButton4.layer.borderWidth = borderWidth;
+    
    // NSArray *personids = [NSArray arrayWithObjects:@"2",@"5",@"99999", nil];
    // [self getQueryForPersons:[NSMutableArray arrayWithArray:personids] andCity:@"San Francisco"];
 }
@@ -125,6 +186,7 @@ NSArray *searchResults;
 
 -(IBAction)displayContacts:(id)sender
 {
+    self.selectedButtonTag = [sender tag];
     _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     self.contactsArray = [[NSMutableArray alloc]initWithCapacity:0];
     [self checkAddressBookAccess];
@@ -139,6 +201,7 @@ NSArray *searchResults;
     {
             // Update our UI if the user has granted access to their Contacts
         case  kABAuthorizationStatusAuthorized:
+            [getPhotosOfLabel setHidden:TRUE];
             [self showPeoplePickerController];
             break;
             // Prompt the user for access to Contacts if there is no definitive answer
@@ -195,24 +258,24 @@ NSArray *searchResults;
 {
     [self.addButton setHidden:TRUE];
     
-    NSString *firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    NSString *lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    self.selectedContactFirstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    self.selectedContactLastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
     
     self.personID = ABRecordGetRecordID(person);
     
     NSInteger recordID  =  ABRecordGetRecordID(person);
     [self.personIds addObject:[NSString stringWithFormat:@"%d", recordID]];
     
-    NSLog(@"Name and ID: %@ %@ %d", firstName, lastName, self.personID);
+    NSLog(@"Name and ID: %@ %@ %d", self.selectedContactFirstName, self.selectedContactLastName, self.personID);
     
     if (self.namesToBeDisplayed.length != 0) {
         [self.namesToBeDisplayed appendString:@"\nand \n"];
     }
-    if (firstName.length!=0) {
-        [self.namesToBeDisplayed appendFormat:@"%@ ", firstName];
+    if (self.selectedContactFirstName.length!=0) {
+        [self.namesToBeDisplayed appendFormat:@"%@ ", self.selectedContactFirstName];
     }
-    if (lastName.length!=0) {
-        [self.namesToBeDisplayed appendFormat:@"%@ ", lastName ];
+    if (self.selectedContactLastName.length!=0) {
+        [self.namesToBeDisplayed appendFormat:@"%@ ", self.selectedContactLastName ];
     }
     
     [self dismissViewControllerAnimated:picker completion:nil];
@@ -229,6 +292,21 @@ NSArray *searchResults;
         [self.addButton setHidden:FALSE];
     }
     //[self getPhotos];
+    
+    //get contact image of the selected contact
+    if (ABPersonHasImageData(person))
+    {
+        self.personHasImage = TRUE;
+        CFDataRef imageData = ABPersonCopyImageData(person);
+        self.contactImage = [UIImage imageWithData:(__bridge NSData *)imageData];
+        CFRelease(imageData);
+    }
+    else
+        self.personHasImage = FALSE;
+    
+    [self displaySelectedContact];
+    
+    
 
   //  [firstName stringByAppendingString:(lastName)]
 	return NO;
@@ -240,18 +318,38 @@ NSArray *searchResults;
     [self.myselfButton setHidden:FALSE];
     [self.personButton setHidden:FALSE];
     [self.resetButton setHidden:TRUE];
-    [self.cityName setHidden:TRUE];
+    //[self.cityName setHidden:TRUE];
     [self.locationButton setHidden:FALSE];
 
     myself = FALSE;
     self.personSelected = FALSE;
     self.citySelected = FALSE;
-    self.cityName.text = @"";
+    self.cityName.text = @"Location";
     self.city = @"";
     self.contactName.text = @"";
     [self.addButton setHidden:TRUE];
     [self.personIds removeAllObjects];
     self.namesToBeDisplayed = [[NSMutableString alloc]initWithString:@""];
+    
+    [myselfLabel setTextColor:[UIColor darkGrayColor]];
+    [self.myselfIcon setBackgroundColor:[UIColor clearColor]];
+    
+    [self.contactButton1 setImage:defaultContactImage forState:UIControlStateNormal];
+    [self.contactButton2 setImage:defaultContactImage forState:UIControlStateNormal];
+    [self.contactButton3 setImage:defaultContactImage forState:UIControlStateNormal];
+    [self.contactButton4 setImage:defaultContactImage forState:UIControlStateNormal];
+    
+    [firstName1 setHidden:TRUE];
+    [firstName2 setHidden:TRUE];
+    [firstName3 setHidden:TRUE];
+    [firstName4 setHidden:TRUE];
+    
+    [lastName1 setHidden:TRUE];
+    [lastName2 setHidden:TRUE];
+    [lastName3 setHidden:TRUE];
+    [lastName4 setHidden:TRUE];
+
+    [getPhotosOfLabel setHidden:FALSE];
 }
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
@@ -291,6 +389,10 @@ NSArray *searchResults;
     [self.addButton setHidden:FALSE];
     
     [self.personIds addObject:@"99999"];
+    
+    [myselfLabel setTextColor:universalAppColor];
+    [self.myselfIcon setBackgroundColor:universalAppColor];
+    [getPhotosOfLabel setHidden:TRUE];
 
     
 }
@@ -627,7 +729,7 @@ NSArray *searchResults;
         self.city = selectedCell.textLabel.text;
         NSLog(@"did select row no. %d with title: %@", indexPath.row, self.cityName.text);
         [self.cityName setHidden:FALSE];
-        [self.locationButton setHidden:TRUE];
+        //[self.locationButton setHidden:TRUE];
         [self.resetButton setHidden:FALSE];
         self.citySelected = TRUE;
         [self.searchDisplayController setActive:NO animated:YES];
@@ -687,6 +789,80 @@ shouldReloadTableForSearchString:(NSString *)searchString
     [banner setAlpha:0];
     [UIView commitAnimations];
 }
+
+-(void)displaySelectedContact
+{
+    switch (self.selectedButtonTag) {
+        case 1:
+            [firstName1 setHidden:FALSE];
+            [lastName1 setHidden:FALSE];
+            if (selectedContactFirstName.length!=0)
+                firstName1.text = self.selectedContactFirstName;
+            if (self.selectedContactLastName.length!=0)
+                lastName1.text = self.selectedContactLastName;
+        
+            if (self.personHasImage)
+            {
+                [self.contactButton1 setImage:self.contactImage forState:UIControlStateNormal];
+            }
+            else
+                [self.contactButton1 setImage:defaultContactImage forState:UIControlStateNormal];
+            break;
+            
+        case 2:
+            [firstName2 setHidden:FALSE];
+            [lastName2 setHidden:FALSE];
+            if (selectedContactFirstName.length!=0)
+                firstName2.text = self.selectedContactFirstName;
+            if (self.selectedContactLastName.length!=0)
+                lastName2.text = self.selectedContactLastName;
+            
+            if (self.personHasImage)
+            {
+                [self.contactButton2 setImage:self.contactImage forState:UIControlStateNormal];
+            }
+            else
+                [self.contactButton2 setImage:defaultContactImage forState:UIControlStateNormal];
+            break;
+            
+        case 3:
+            [firstName3 setHidden:FALSE];
+            [lastName3 setHidden:FALSE];
+            if (selectedContactFirstName.length!=0)
+                firstName3.text = self.selectedContactFirstName;
+            if (self.selectedContactLastName.length!=0)
+                lastName3.text = self.selectedContactLastName;
+            
+            if (self.personHasImage)
+            {
+                [self.contactButton3 setImage:self.contactImage forState:UIControlStateNormal];
+            }
+            else
+                [self.contactButton3 setImage:defaultContactImage forState:UIControlStateNormal];
+            break;
+            
+        case 4:
+            [firstName4 setHidden:FALSE];
+            [lastName4 setHidden:FALSE];
+            if (selectedContactFirstName.length!=0)
+                firstName4.text = self.selectedContactFirstName;
+            if (self.selectedContactLastName.length!=0)
+                lastName4.text = self.selectedContactLastName;
+            
+            if (self.personHasImage)
+            {
+                [self.contactButton4 setImage:self.contactImage forState:UIControlStateNormal];
+            }
+            else
+                [self.contactButton4 setImage:defaultContactImage forState:UIControlStateNormal];
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -58,6 +58,22 @@
     selectedRets = [[NSMutableArray alloc] init];
     collageSelect = [[NSMutableArray alloc] init ];
     
+    //self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:20];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Photos";
+    [label setShadowColor:[UIColor darkGrayColor]];
+    [label setShadowOffset:CGSizeMake(0, -0.5)];
+    self.navigationItem.titleView = label;
+    
+    [collageButton setTintColor:[UIColor whiteColor]];
+
+    
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

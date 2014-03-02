@@ -14,6 +14,7 @@
 {
     //NSArray *photosArray;
     IBOutlet UIBarButtonItem *selectButton;
+    IBOutlet UIButton *collageButton;
 }
 
 @property (nonatomic, strong) NSMutableArray *photoURLArray;
