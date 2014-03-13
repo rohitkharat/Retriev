@@ -198,6 +198,19 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="BxG-9f-Hjs">
+                                <rect key="frame" x="273" y="84" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="tintColor" red="0.23137254900000001" green="0.4941176471" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.23137254900000001" green="0.4941176471" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.23137254900000001" green="0.4941176471" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Y7l-UD-4ew" kind="modal" modalTransitionStyle="partialCurl" id="Rli-of-4d1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -216,6 +229,7 @@
                         <outlet property="firstName4" destination="Tej-wN-Aa9" id="upP-f1-KUF"/>
                         <outlet property="getPhotosButton" destination="Wn2-05-vqK" id="HpE-FV-Lp5"/>
                         <outlet property="getPhotosOfLabel" destination="Nd5-RY-mdm" id="mJQ-fM-GF1"/>
+                        <outlet property="infoButton" destination="BxG-9f-Hjs" id="R4I-EH-tav"/>
                         <outlet property="lastName1" destination="yBE-2o-bll" id="gAt-qd-MBm"/>
                         <outlet property="lastName2" destination="YVM-Rl-GgV" id="FUC-ul-9ez"/>
                         <outlet property="lastName3" destination="FEi-Ie-Euy" id="YID-bU-XBS"/>
@@ -316,29 +330,51 @@
             </objects>
             <point key="canvasLocation" x="1703" y="-199"/>
         </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="8fS-1W-R3H">
+        <!--View Controller-->
+        <scene sceneID="aK1-1l-GWg">
             <objects>
-                <viewController id="h54-Z1-pKP" customClass="RKKCameraViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="k8c-ib-5MS">
+                <viewController id="Y7l-UD-4ew" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8at-Bs-NHr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="aqR-Nf-oD9">
-                                <rect key="frame" x="0.0" y="65" width="320" height="379"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" id="MIG-Cz-wwk">
+                                <rect key="frame" x="0.0" y="97" width="320" height="471"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <mutableString key="text">                             User Manual                                                                               
+
+This app is really easy to use! The ground rule is, in order to retrieve photos of a person, you have to tag that person in those photos.                           
+
+The 1st Tab is used to get photos of people that have already been tagged using this app. The 2nd tab is used to tag people in your photos. 
+
+Tagging:
+When you select the 2nd tab, you will be presented with an interface to select a photo from your iPhone's Photo Library. Once you select a photo, the app will fetch the photo and detect faces in the image. If a face has been detected, you can tap on the face to tag that person. If no faces are detected, you cannot tag a person in that photo.
+
+Retrieving:
+You can retrieve photos of yourself and/or of your friends. If you select two or more people, Retriev will get you those photos in which all the selected people have been tagged together. So, If you want photos of yourself, simply select Myself and hit the Get Photos button. If you want to get a photo of ‘Mom’ and ‘Dad’, select Mom from your contact list, select Dad from your contact list and hit the Get Photos button. Retriev will get you all those photos in which Mom and Dad have been tagged together.
+
+Location:
+This app will also store the geo-location information of a photo when you tag someone. So you can retrieve photos of your family’s trip to San Francisco by simply selecting ‘Myself’, ‘Mom’ and ‘Dad’ and selecting ’San Francisco’ from the location menu in the app. 
+For this, geo-location needs to be enabled on your iPhone at the time you clicked those photos. If the location information is not present, this app cannot store the city in which that photo was clicked and you will not see San Francisco in the list of available locations for selection. 
+
+Sharing:
+Once you retrieve the desired photos, you can share some of these via Facebook by clicking the icon on the top right corner of the screen. More sharing options will be able in the future.
+
+Support:
+If you want to provide any feedback or suggestions, please send an email to retriev.ios@gmail.com</mutableString>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="doR-BW-iRj"/>
-                    <connections>
-                        <outlet property="imageView" destination="aqR-Nf-oD9" id="cfs-Ki-Vyq"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="CzT-Kz-gQe"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z1O-D4-D31" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uoY-cT-B9x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1184" y="785"/>
+            <point key="canvasLocation" x="1202" y="699"/>
         </scene>
         <!--Second View Controller - Second-->
         <scene sceneID="ot8-2e-RuS">
@@ -393,7 +429,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1705" y="498"/>
+            <point key="canvasLocation" x="2231" y="498"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -433,31 +469,9 @@
             </objects>
             <point key="canvasLocation" x="653" y="-138"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="f5b-DH-puN">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vQD-jK-wfh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" enabled="NO" title="" image="camera.png" id="e7N-BE-afU">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
-                    </tabBarItem>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="viC-uj-GDc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="h54-Z1-pKP" kind="relationship" relationship="rootViewController" id="PqF-5l-M7E"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FhT-dt-xzE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="658" y="785"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Icon-contact.png" width="107" height="110"/>
-        <image name="camera.png" width="24" height="18"/>
         <image name="globe-01-128.png" width="128" height="128"/>
         <image name="magnify.png" width="24" height="24"/>
         <image name="redo.png" width="30" height="26"/>

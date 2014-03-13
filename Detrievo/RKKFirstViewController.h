@@ -41,6 +41,8 @@
     
     UIColor *universalAppColor;
     
+    IBOutlet UIButton *infoButton;
+    
 }
 
 -(IBAction)displayContacts:(id)sender;

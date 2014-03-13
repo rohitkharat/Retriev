@@ -663,16 +663,23 @@ NSArray *searchResults;
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+    if (sender == infoButton)
+    {
+        return TRUE;
+    }
  
-    if (!self.citySelected && !self.personSelected && !myself) {
+    else if (!self.citySelected && !self.personSelected && !myself) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select a Person or a City" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
         return NO;
     }
     
-    [self getPhotos];
-
-    return TRUE;
+    else
+    {
+        [self performSelectorOnMainThread:@selector(getPhotos) withObject:nil waitUntilDone:YES];
+        return self.imagesFound;
+    }
+    
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
