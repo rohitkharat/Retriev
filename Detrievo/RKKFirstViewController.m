@@ -245,6 +245,8 @@ NSArray *searchResults;
 // This method is called when the user has granted access to their address book data.
 -(void)showPeoplePickerController
 {
+    NSLog(@"showPeoplePickerController");
+
     picker = [[ABPeoplePickerNavigationController alloc]init];
     picker.peoplePickerDelegate = self;
     
@@ -256,6 +258,8 @@ NSArray *searchResults;
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
+    NSLog(@"shouldContinueAfterSelectingPerson");
+    
     [self.addButton setHidden:TRUE];
     
     self.selectedContactFirstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
@@ -371,6 +375,12 @@ NSArray *searchResults;
 					property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue
 {
 	return NO;
+}
+
+//iOS 8 update. Added this delegate method to make sure the shouldContinueAfterSelectingPerson method is invoked.
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person;
+{
+    [self peoplePickerNavigationController:peoplePicker shouldContinueAfterSelectingPerson:person];
 }
 
 -(IBAction)setMyself:(id)sender
@@ -876,9 +886,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 
 @end

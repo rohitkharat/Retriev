@@ -108,7 +108,6 @@ static sqlite3_stmt *statement = nil;
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     [untagButton setBackgroundImage:blackButtonImage forState:UIControlStateNormal];
     [anotherPhotoButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
-    
     self.canDisplayBannerAds = TRUE;
     
 }
@@ -396,6 +395,12 @@ static sqlite3_stmt *statement = nil;
 					property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue
 {
 	return NO;
+}
+
+//iOS 8 update. Added this delegate method to make sure the shouldContinueAfterSelectingPerson method is invoked.
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person;
+{
+    [self peoplePickerNavigationController:peoplePicker shouldContinueAfterSelectingPerson:person];
 }
 
 -(void)tagPerson: (ABRecordID)recordID

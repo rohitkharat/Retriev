@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="8YX-ce-x5E">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--First View Controller - First-->
+        <!--First-->
         <scene sceneID="W3I-pn-N6e">
             <objects>
                 <viewController title="First" id="CZ4-MO-1fc" customClass="RKKFirstViewController" sceneMemberID="viewController">
@@ -255,7 +256,7 @@
             </objects>
             <point key="canvasLocation" x="1184" y="-138"/>
         </scene>
-        <!--Photo Collection View Controller - Photos-->
+        <!--Photos-->
         <scene sceneID="xXd-hS-AhP">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="6Jl-F3-RlJ" customClass="RKKPhotoCollectionViewController" sceneMemberID="viewController">
@@ -342,7 +343,7 @@
                                 <rect key="frame" x="0.0" y="97" width="320" height="471"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <mutableString key="text">                             User Manual                                                                               
+                                <string key="text">                             User Manual                                                                               
 
 This app is really easy to use! The ground rule is, in order to retrieve photos of a person, you have to tag that person in those photos.                           
 
@@ -362,7 +363,7 @@ Sharing:
 Once you retrieve the desired photos, you can share some of these via Facebook by clicking the icon on the top right corner of the screen. More sharing options will be able in the future.
 
 Support:
-If you want to provide any feedback or suggestions, please send an email to retriev.ios@gmail.com</mutableString>
+If you want to provide any feedback or suggestions, please send an email to retriev.ios@gmail.com</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -376,7 +377,7 @@ If you want to provide any feedback or suggestions, please send an email to retr
             </objects>
             <point key="canvasLocation" x="1202" y="699"/>
         </scene>
-        <!--Second View Controller - Second-->
+        <!--Second-->
         <scene sceneID="ot8-2e-RuS">
             <objects>
                 <viewController title="Second" id="QUy-BD-bpt" customClass="RKKSecondViewController" sceneMemberID="viewController">
@@ -391,6 +392,7 @@ If you want to provide any feedback or suggestions, please send an email to retr
                             <button opaque="NO" alpha="0.59999999999999964" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KcW-Cp-Ygb">
                                 <rect key="frame" x="72" y="359" width="177" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Untag This Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -478,10 +480,10 @@ If you want to provide any feedback or suggestions, please send an email to retr
         <image name="tag.png" width="22" height="22"/>
         <image name="video-collage.png" width="26" height="22"/>
     </resources>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

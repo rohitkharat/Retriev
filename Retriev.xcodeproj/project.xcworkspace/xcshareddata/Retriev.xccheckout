@@ -10,29 +10,29 @@
 	<string>Retriev</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B17B6D19-9F09-4374-BCCA-986A847D72B5</key>
+		<key>669F80BEA571ACDF9DC84CB49059F8C0330C9D36</key>
 		<string>https://github.com/rohitkharat/Retriev.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Retriev.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B17B6D19-9F09-4374-BCCA-986A847D72B5</key>
+		<key>669F80BEA571ACDF9DC84CB49059F8C0330C9D36</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/rohitkharat/Retriev.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B17B6D19-9F09-4374-BCCA-986A847D72B5</string>
+	<string>669F80BEA571ACDF9DC84CB49059F8C0330C9D36</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B17B6D19-9F09-4374-BCCA-986A847D72B5</string>
+			<string>669F80BEA571ACDF9DC84CB49059F8C0330C9D36</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Retriev</string>
 		</dict>

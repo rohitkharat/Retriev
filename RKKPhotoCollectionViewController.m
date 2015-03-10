@@ -72,7 +72,6 @@
     self.navigationItem.titleView = label;
     
     [collageButton setTintColor:[UIColor whiteColor]];
-
     
 }
 

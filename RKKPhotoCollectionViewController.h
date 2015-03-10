@@ -10,7 +10,6 @@
 
 @interface RKKPhotoCollectionViewController : UICollectionViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
-
 {
     //NSArray *photosArray;
     IBOutlet UIBarButtonItem *selectButton;
