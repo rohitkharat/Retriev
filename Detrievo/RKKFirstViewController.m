@@ -245,8 +245,6 @@ NSArray *searchResults;
 // This method is called when the user has granted access to their address book data.
 -(void)showPeoplePickerController
 {
-    NSLog(@"showPeoplePickerController");
-
     picker = [[ABPeoplePickerNavigationController alloc]init];
     picker.peoplePickerDelegate = self;
     
@@ -258,8 +256,6 @@ NSArray *searchResults;
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-    NSLog(@"shouldContinueAfterSelectingPerson");
-    
     [self.addButton setHidden:TRUE];
     
     self.selectedContactFirstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
@@ -634,7 +630,7 @@ NSArray *searchResults;
             CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
             [geocoder reverseGeocodeLocation:photo.photoLocation
                            completionHandler:^(NSArray *placemarks, NSError *error) {
-                               NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
+                               
                                
                        if (error){
                            NSLog(@"Geocode failed with error: %@", error);

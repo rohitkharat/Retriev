@@ -487,7 +487,7 @@ static sqlite3_stmt *statement = nil;
     NSLog(@"getting photo with url: %@", self.imgURL);
     // NSURL *imageURL = [NSURL URLWithString:self.imgURLString];
     
-    NSLog(@"got URL");
+//    NSLog(@"got URL");
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.imgURL resultBlock:^(ALAsset *asset)
      {
@@ -579,7 +579,6 @@ static sqlite3_stmt *statement = nil;
 
 -(void)untagPhoto
 {
-    NSLog(@"untag photo clicked");
     const char *dbPath = [databasePath UTF8String];
     
     if (sqlite3_open(dbPath, &database) == SQLITE_OK)
